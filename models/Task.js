@@ -3,6 +3,7 @@ module.exports = (model, Schema) => {
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     name: String,
     notes: String,
+    rating: Number,
   }, {
     timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }
   })
