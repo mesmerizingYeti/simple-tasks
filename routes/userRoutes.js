@@ -25,7 +25,7 @@ module.exports = app => {
 
   // UPDATE ONE User
   app.put('/users', (req, res) => {
-    User.updateOne({ _id: req.user._id }, req.body )
+    User.updateOne({ _id: req.body._id }, req.body )
       .then(() => res.sendStatus(200))
       .catch(e => console.log(e))
   })
