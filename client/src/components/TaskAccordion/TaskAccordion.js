@@ -11,14 +11,20 @@ import {
   Button
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles({
+  checked: { 
+    textDecoration: 'line-through'
+  },
+  unchecked: {
+    textDecoration: 'none'
+  }
+})
 
 const TaskAccordion = props => {
   return (
-    <div
-      onDragOver={props.dragOverFunction}
-      onDragStart={props.dragStartFunction}
-      draggable
-    >
+    <div>
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -37,7 +43,7 @@ const TaskAccordion = props => {
         <Divider />
         <AccordionDetails>
           <Typography color="textSecondary">
-            {props.note}
+            {props.notes}
           </Typography>
         </AccordionDetails>
         <AccordionActions>
