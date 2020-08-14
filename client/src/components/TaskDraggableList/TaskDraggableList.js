@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './TaskDraggableList.css'
 import { ReactSortable } from 'react-sortablejs'
 import TaskAccordion from '../TaskAccordion'
 
@@ -38,6 +39,8 @@ const TaskDraggableList = () => {
     <ReactSortable 
       list={tasks} 
       setList={setTasks}
+      handle='.makeStyles-handle-2'
+      animation={150}
       delayOnTouchStart={true}
       delay={2}
     >
