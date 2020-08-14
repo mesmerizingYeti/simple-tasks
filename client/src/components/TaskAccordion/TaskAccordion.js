@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Accordion,
   AccordionSummary,
@@ -14,18 +14,26 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
-  checked: { 
+  formChecked: { 
     textDecoration: 'line-through'
   },
-  unchecked: {
+  formUnchecked: {
     textDecoration: 'none'
+  },
+  accordionChecked: { 
+    
+  },
+  accordionUnchecked: { 
+    
   }
 })
 
 const TaskAccordion = props => {
+  const classes = useStyles()
+
   return (
     <div>
-      <Accordion>
+      <Accordion className={props.checked ? classes.accordionChecked : classes.accordionUnchecked}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-label="Expand"
@@ -33,8 +41,10 @@ const TaskAccordion = props => {
           id="additional-actions1-header"
         >
           <FormControlLabel
+            checked={props.checked}
+            className={props.checked ? classes.formChecked : classes.formUnchecked}
             aria-label="Acknowledge"
-            onClick={(event) => event.stopPropagation()}
+            onClick={props.setChecked(props.index, !props.checked)}
             onFocus={(event) => event.stopPropagation()}
             control={<Checkbox />}
             label={props.title}
