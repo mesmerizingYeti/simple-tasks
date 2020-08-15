@@ -13,16 +13,7 @@ import AddIcon from '@material-ui/icons/Add'
 import HomeContext from '../../utils/HomeContext'
 
 const AddTaskForm = () => {
-  const [open, setOpen] = useState(false)
   const { title, notes, handleInputChange, addFormOpen, handleAddFormOpen, handleAddFormCancel, handleAddFormAdd } = useContext(HomeContext)
-
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
 
   return (
     <div>
