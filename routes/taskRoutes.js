@@ -2,7 +2,8 @@ const { Task } = require('../models')
 
 module.exports = app => {
 
-  // GET ALL Task
+  // GET ALL Tasks for User
+  // Need to change after adding login
   app.get('/tasks', (req, res) => {
     Task.find()
       .then((tasks) => req.json(tasks))
