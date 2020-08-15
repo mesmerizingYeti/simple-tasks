@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import {
   Grid,
-  Paper,
   Accordion,
   AccordionSummary,
   AccordionDetails,
@@ -14,6 +13,9 @@ import {
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
+import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
+import ArchiveIcon from '@material-ui/icons/Archive'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
@@ -86,9 +88,29 @@ const TaskAccordion = props => {
               </Typography>
             </AccordionDetails>
             <AccordionActions>
-              <Button size="small" variant="contained" color="primary">Edit</Button>
-              <Button size="small" variant="contained">Archive</Button>
-              <Button size="small" variant="contained" color="secondary">Delete</Button>
+              <Button 
+                size="small" 
+                variant="contained" 
+                color="primary"
+                startIcon={<EditIcon />}
+              >
+                Edit
+              </Button>
+              <Button 
+                size="small" 
+                variant="contained"
+                startIcon={<ArchiveIcon />}
+              >
+                Archive
+              </Button>
+              <Button 
+                size="small" 
+                variant="contained" 
+                color="secondary"
+                startIcon={<DeleteIcon />}
+              >
+                Delete
+              </Button>
             </AccordionActions>
           </Accordion>
         </Grid>
