@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
   Button,
   TextField,
@@ -10,9 +10,11 @@ import {
   DialogTitle
 } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
+import HomeContext from '../../utils/HomeContext'
 
 const AddTaskForm = () => {
   const [open, setOpen] = useState(false)
+  const { title, notes, handleInputChange, addFormOpen, handleAddFormOpen, handleAddFormCancel, handleAddFormAdd } = useContext(HomeContext)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -27,12 +29,12 @@ const AddTaskForm = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={handleClickOpen}
+        onClick={handleAddFormOpen}
         startIcon={<AddIcon />}
       >
         New Task
       </Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-task-title">
+      <Dialog open={addFormOpen} onClose={handleAddFormCancel} aria-labelledby="form-task-title">
         <DialogTitle id="form-task-title">Add Task</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -40,15 +42,20 @@ const AddTaskForm = () => {
           </DialogContentText>
           <TextField
             autoFocus
+            name="title"
+            value={title}
+            onChange={handleInputChange}
             margin="dense"
-            id="title"
             label="Task Title"
             type="text"
             fullWidth
-          />
+            />
+          <br />
           <TextField
+            name="notes"
+            value={notes}
+            onChange={handleInputChange}
             margin="dense"
-            id="notes"
             label="Notes"
             multiline
             rows={4}
@@ -57,10 +64,10 @@ const AddTaskForm = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="secondary" variant="outlined">
+          <Button onClick={handleAddFormCancel} color="secondary" variant="outlined">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary" variant="outlined">
+          <Button onClick={handleAddFormAdd} color="primary" variant="outlined">
             Add
           </Button>
         </DialogActions>

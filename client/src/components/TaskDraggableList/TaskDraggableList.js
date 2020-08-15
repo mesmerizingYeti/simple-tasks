@@ -1,58 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { ReactSortable } from 'react-sortablejs'
 import TaskAccordion from '../TaskAccordion'
-
-const itemList = [{
-  title: 'Item 1', 
-  id: 'Item 1',
-  notes: 'Notes for the first item.',
-  isChecked: false,
-  isArchived: false
-}, {
-  title: 'Item 2', 
-  id: 'Item 2',
-  notes: 'Notes for the second item.',
-  isChecked: false,
-  isArchived: false
-}, {
-  title: 'Item 3', 
-  id: 'Item 3',
-  notes: 'Notes for the third item.',
-  isChecked: true,
-  isArchived: false
-}, {
-  title: 'Item 4', 
-  id: 'Item 4',
-  notes: 'Notes for the fourth item.',
-  isChecked: false,
-  isArchived: false
-}]
+import HomeContext from '../../utils/HomeContext'
 
 const TaskDraggableList = () => {
-  const [tasks, setTasks] = useState(itemList)
-
-  const setChecked = (index, setValue) => event => {
-    event.stopPropagation()
-    let currentTasks = [...tasks]
-    currentTasks[index].isChecked = setValue
-    setTasks(currentTasks)
-  }
+  const { taskList, handleTaskCheck, setTaskList } = useContext(HomeContext)
 
   return (
     <ReactSortable 
-      list={tasks} 
-      setList={setTasks}
+      list={taskList} 
+      setList={setTaskList}
       handle='.makeStyles-handle-2'
       animation={150}
       delayOnTouchStart={true}
       delay={2}
     >
-      {tasks.map((task, index) => {
+      {taskList.map((task, index) => {
         return (
           <div key={task.id}>
             <TaskAccordion
               index={index}
-              setChecked={setChecked}
+              setChecked={handleTaskCheck}
               {...task} 
             />
           </div>
