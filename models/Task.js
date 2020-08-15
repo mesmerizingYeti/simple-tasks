@@ -1,9 +1,11 @@
 module.exports = (model, Schema) => {
   const Task = new Schema ({
     user: { type: Schema.Types.ObjectId, ref: 'User' },
-    name: String,
+    title: String,
     notes: String,
-    rating: Number,
+    order: Number,
+    isChecked: Boolean,
+    isArchived: Boolean
   }, {
     timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }
   })

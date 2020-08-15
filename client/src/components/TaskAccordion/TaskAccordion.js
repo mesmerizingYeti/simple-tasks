@@ -62,7 +62,7 @@ const TaskAccordion = props => {
           </Grid>
         </Grid>
         <Grid item xs={11}>
-          <Accordion className={props.checked ? classes.accordionChecked : classes.accordionUnchecked}>
+          <Accordion className={props.isChecked ? classes.accordionChecked : classes.accordionUnchecked}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-label="Expand"
@@ -70,10 +70,10 @@ const TaskAccordion = props => {
               id="additional-actions1-header"
             >
               <FormControlLabel
-                checked={props.checked}
-                className={props.checked ? classes.formChecked : classes.formUnchecked}
+                checked={props.isChecked}
+                className={props.isChecked ? classes.formChecked : classes.formUnchecked}
                 aria-label="Acknowledge"
-                onClick={props.setChecked(props.index, !props.checked)}
+                onClick={props.setChecked(props.index, !props.isChecked)}
                 onFocus={(event) => event.stopPropagation()}
                 control={<Checkbox />}
                 label={props.title}

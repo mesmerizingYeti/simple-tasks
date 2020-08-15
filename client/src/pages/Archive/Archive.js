@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography'
 const Archive = () => {
   return (
     <div>
-      <Typography variant="h1">Archive Page</Typography>
+      <Typography variant="h3">Archive Page</Typography>
     </div>
   )
 }

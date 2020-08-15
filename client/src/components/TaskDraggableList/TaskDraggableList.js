@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import './TaskDraggableList.css'
 import { ReactSortable } from 'react-sortablejs'
 import TaskAccordion from '../TaskAccordion'
 
@@ -7,22 +6,26 @@ const itemList = [{
   title: 'Item 1', 
   id: 'Item 1',
   notes: 'Notes for the first item.',
-  checked: false
+  isChecked: false,
+  isArchived: false
 }, {
   title: 'Item 2', 
   id: 'Item 2',
   notes: 'Notes for the second item.',
-  checked: false
+  isChecked: false,
+  isArchived: false
 }, {
   title: 'Item 3', 
   id: 'Item 3',
   notes: 'Notes for the third item.',
-  checked: true
+  isChecked: true,
+  isArchived: false
 }, {
   title: 'Item 4', 
   id: 'Item 4',
   notes: 'Notes for the fourth item.',
-  checked: false
+  isChecked: false,
+  isArchived: false
 }]
 
 const TaskDraggableList = () => {
@@ -31,7 +34,7 @@ const TaskDraggableList = () => {
   const setChecked = (index, setValue) => event => {
     event.stopPropagation()
     let currentTasks = [...tasks]
-    currentTasks[index].checked = setValue
+    currentTasks[index].isChecked = setValue
     setTasks(currentTasks)
   }
 

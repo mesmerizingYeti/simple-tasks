@@ -1,13 +1,14 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
-import TaskAccordion from '../../components/TaskAccordion'
+import AddTaskForm from '../../components/AddTaskForm'
 import TaskDraggableList from '../../components/TaskDraggableList'
 
 const Home = () => {
 
   return (
     <div>
-      <Typography variant="h1">Home Page</Typography>
+      <Typography variant="h3">Home Page</Typography>
+      <AddTaskForm />
       <TaskDraggableList />
     </div>
   )
