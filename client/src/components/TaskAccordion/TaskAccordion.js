@@ -94,6 +94,9 @@ const TaskAccordion = props => {
                 variant="contained" 
                 color="primary"
                 startIcon={<EditIcon />}
+                onClick={() => {
+                  // Add edit task dialog
+                }}
               >
                 Edit
               </Button>
@@ -101,19 +104,14 @@ const TaskAccordion = props => {
                 size="small" 
                 variant="contained"
                 startIcon={<ArchiveIcon />}
-                onClick={() =>{ console.log(props) }}
+                onClick={() =>{ 
+                  console.log(props)
+                  // update task in db and remove from local list
+                }}
               >
                 Archive
               </Button>
               <DeleteTaskDialog title={"Delete " + props.title} id={props.id} />
-              {/* <Button 
-                size="small" 
-                variant="contained" 
-                color="secondary"
-                startIcon={<DeleteIcon />}
-              >
-                Delete
-              </Button> */}
             </AccordionActions>
           </Accordion>
         </Grid>

@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 import Home from './pages/Home'
 import Archive from './pages/Archive'
-import Login from './pages/Login'
+import SignIn from './pages/SignIn'
 
 function App() {
   return (
@@ -17,8 +17,8 @@ function App() {
           <Route path="/archive">
             <Archive />
           </Route>
-          <Route path="/login">
-            <Login />
+          <Route path="/SignIn">
+            <SignIn />
           </Route>
           <Route exact path="/">
             <Home />
