@@ -17,6 +17,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import { makeStyles } from '@material-ui/core/styles'
+import DeleteTaskDialog from '../DeleteTaskDialog'
 
 const useStyles = makeStyles({
   root: {
@@ -100,17 +101,19 @@ const TaskAccordion = props => {
                 size="small" 
                 variant="contained"
                 startIcon={<ArchiveIcon />}
+                onClick={() =>{ console.log(props) }}
               >
                 Archive
               </Button>
-              <Button 
+              <DeleteTaskDialog title={"Delete " + props.title} id={props.id} />
+              {/* <Button 
                 size="small" 
                 variant="contained" 
                 color="secondary"
                 startIcon={<DeleteIcon />}
               >
                 Delete
-              </Button>
+              </Button> */}
             </AccordionActions>
           </Accordion>
         </Grid>

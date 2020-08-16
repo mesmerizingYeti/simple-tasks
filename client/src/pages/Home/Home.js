@@ -7,25 +7,25 @@ import HomeContext from '../../utils/HomeContext'
 // Temporary task list for development purposes
 const itemList = [{
   title: 'Item 1', 
-  id: 'Item 1',
+  id: '1',
   notes: 'Notes for the first item.',
   isChecked: false,
   isArchived: false
 }, {
   title: 'Item 2', 
-  id: 'Item 2',
+  id: '22',
   notes: 'Notes for the second item.',
   isChecked: false,
   isArchived: false
 }, {
   title: 'Item 3', 
-  id: 'Item 3',
+  id: '333',
   notes: 'Notes for the third item.',
   isChecked: true,
   isArchived: false
 }, {
   title: 'Item 4', 
-  id: 'Item 4',
+  id: '4444',
   notes: 'Notes for the fourth item.',
   isChecked: false,
   isArchived: false
@@ -72,6 +72,11 @@ const Home = () => {
     }
     let taskList = [...homeState.taskList, newTask]
     setHomeState({ ...homeState, taskList, title: '', notes: '', addFormOpen: false })
+  }
+
+  homeState.handleDeleteTask = id => event => {
+    let taskList = homeState.taskList.filter(task => task.id !== id)
+    setHomeState({ ...homeState, taskList })
   }
 
   return (

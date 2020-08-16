@@ -12,7 +12,7 @@ import HomeContext from '../../utils/HomeContext'
 
 const DeleteTaskDialog = props => {
   const [open, setOpen] = useState(false)
-  const {} = useContext(HomeContext)
+  const { handleDeleteTask } = useContext(HomeContext)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -41,10 +41,10 @@ const DeleteTaskDialog = props => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} variant="outlined">
+          <Button onClick={handleClose} variant="contained">
             Cancel
           </Button>
-          <Button color="secondary" variant="outlined">
+          <Button onClick={handleDeleteTask(props.id)} color="secondary" variant="contained">
             Delete
           </Button>
         </DialogActions>

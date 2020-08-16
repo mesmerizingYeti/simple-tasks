@@ -10,7 +10,8 @@ const HomeContext = createContext({
   addFormOpen: false,
   handleAddFormOpen: () => {},
   handleAddFormCancel: () => {},
-  handleAddFormAdd: () => {}
+  handleAddFormAdd: () => {},
+  handleDeleteTask: () => {}
 })
 
 export default HomeContext
