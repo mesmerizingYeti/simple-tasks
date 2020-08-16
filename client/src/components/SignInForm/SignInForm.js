@@ -20,17 +20,53 @@ const SignInForm = () => {
   return (
     <Grid 
       container
+      spacing={2}
       justify="center" 
       direction="column" 
       alignItems="center"
     >
-      <Grid item xs={12}>
+      <Grid 
+        item 
+        container
+        direction="row"
+        alignItems="center" 
+        xs={9}
+      >
         <TextField
           fullWidth
           label="Email Address"
           type="email"
           variant="outlined"
         />
+      </Grid>
+      <Grid 
+        item 
+        container
+        direction="row"
+        alignItems="center" 
+        xs={9}
+      >
+        <TextField
+          fullWidth
+          label="Password"
+          type="password"
+          variant="outlined"
+        />
+      </Grid>
+      <Grid 
+        item 
+        container
+        direction="row"
+        alignItems="center" 
+        xs={9}
+      >
+        <Button
+          fullWidth
+          color="primary"
+          variant="contained"
+        >
+          Sign In
+        </Button>
       </Grid>
     </Grid>
   )
