@@ -1,6 +1,10 @@
 import React from 'react'
-import Typography from '@material-ui/core/Typography'
+import {
+  Grid,
+  Typography
+} from '@material-ui/core'
 import SignInForm from '../../components/SignInForm'
+import GoogleSignInButton from '../../components/GoogleSignInButton'
 
 const Login = () => {
   return (
@@ -17,6 +21,8 @@ const Login = () => {
         Forgot password?    Don't have an account? Sign Up
       */}
       <SignInForm />
+      <br />
+      <GoogleSignInButton />
     </div>
   )
 }
