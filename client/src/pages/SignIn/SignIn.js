@@ -1,10 +1,12 @@
 import React from 'react'
 import {
   Grid,
-  Typography
+  Typography,
+  Button
 } from '@material-ui/core'
 import SignInForm from '../../components/SignInForm'
 import GoogleSignInButton from '../../components/GoogleSignInButton'
+import axios from 'axios'
 
 const Login = () => {
   return (
@@ -22,7 +24,15 @@ const Login = () => {
       */}
       <SignInForm />
       <br />
-      <GoogleSignInButton />
+      <Button 
+        variant="contained" 
+        onClick={() =>{
+          console.log('Trying to sign in')
+          axios.get('/auth/google')
+        }}
+      >
+        Google Sign In
+      </Button>
     </div>
   )
 }

@@ -26,7 +26,7 @@ module.exports = app => {
   })
 
   // Sign in user with google
-  app.post('/auth/google', passport.authenticate('google'))
+  app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }))
 
   // When google sign in is successful, send user info
   app.get('/auth/signin/success', (req, res) => {

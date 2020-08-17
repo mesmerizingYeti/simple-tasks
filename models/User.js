@@ -9,6 +9,6 @@ module.exports = (model, Schema) => {
     timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } 
   })
 
-  // User.plugin( require('passport-local-mongoose'))
+  User.plugin( require('passport-local-mongoose'))
   return model( 'User', User )
 }
