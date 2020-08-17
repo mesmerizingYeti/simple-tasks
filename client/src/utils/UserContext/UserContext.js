@@ -4,7 +4,8 @@ const UserContext = createContext({
   email: '',
   _id: '',
   jwt: '',
-  setUser: () => {}
+  isGoogle: false,
+  handleCreateUser: () => {}
 })
 
 export default UserContext

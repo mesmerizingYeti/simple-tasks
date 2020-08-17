@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Typography from '@material-ui/core/Typography'
 import AddTaskForm from '../../components/AddTaskForm'
 import TaskDraggableList from '../../components/TaskDraggableList'
 import HomeContext from '../../utils/HomeContext'
+import UserContext from '../../utils/UserContext'
 
 // Temporary task list for development purposes
 const itemList = [{
@@ -32,6 +33,7 @@ const itemList = [{
 }]
 
 const Home = () => {
+  const { email, _id, jwt } = useContext(UserContext)
   const [homeState, setHomeState] = useState({
     taskList: itemList,
     title: '',

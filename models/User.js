@@ -1,6 +1,6 @@
 module.exports = (model, Schema) => {
   const User = new Schema ({
-    username: {
+    email: {
       type: String,
       unique: true
     },

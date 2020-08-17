@@ -28,9 +28,6 @@ const useStyles = makeStyles({
     cursor: 'move',
     cursor: '-webkit-grabbing'
   },
-  grid: {
-    display: 'flex'
-  },
   formChecked: {
     textDecoration: 'line-through'
   },
@@ -51,11 +48,10 @@ const TaskAccordion = props => {
   return (
     <div className={classes.root}>
       <Grid
-        contianer
+        container
         wrap="nowrap"
         alignItems="center"
         justify="center"
-        className={classes.grid}
       >
         <Grid item xs={1}>
           <Grid container alignItems="center" justify="center">
