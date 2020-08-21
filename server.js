@@ -1,5 +1,5 @@
-require('./config').config()
 require('dotenv').config()
+require('./config').config()
 const express = require('express')
 const { join } = require('path')
 const cookieSession = require('cookie-session')

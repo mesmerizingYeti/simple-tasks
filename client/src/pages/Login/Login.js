@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   Grid,
   Typography,
@@ -9,6 +10,8 @@ import GoogleSignInButton from '../../components/GoogleSignInButton'
 import axios from 'axios'
 
 const Login = () => {
+  const history = useHistory()
+
   return (
     <div>
       <Typography variant="h3">Login Page</Typography>
@@ -28,7 +31,8 @@ const Login = () => {
         variant="contained" 
         onClick={() =>{
           console.log('Trying to sign in')
-          axios.get('/auth/google')
+          history.push('/auth/google')
+          history.go(0)
         }}
       >
         Google Login

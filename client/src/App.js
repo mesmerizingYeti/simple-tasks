@@ -29,12 +29,12 @@ function App() {
       .then(({ data }) => {
         const { isAuthenticated, user } = data
         // user has value if isAuthenticated is true
-        if (success) {
+        if (isAuthenticated) {
           const { _id, googleId, email, name } = user
           setUserState({ ...userState, isAuthenticated, _id, googleId, email, name })
         }
         // finished loading user data
-        setLoading(false)
+        setIsLoading(false)
       })
       .catch(err => console.error(err))
   }, [])
@@ -46,7 +46,7 @@ function App() {
         : (
           <Router>
             <div>
-              <UserContext.Provider value={user}>
+              <UserContext.Provider value={userState}>
                 <Switch>
                   <Route path="/archive">
                     {userState.isAuthenticated
