@@ -10,9 +10,12 @@ import Home from './pages/Home'
 import Archive from './pages/Archive'
 import Login from './pages/Login'
 import UserContext from './utils/UserContext'
+import DrawerContext from './utils/DrawerContext'
 import { checkGoogleAuth } from './utils/UserAuthApi'
 
 function App() {
+  // prevent components from rendering until useEffect finishes
+  const [isLoading, setIsLoading] = useState(true)
   const [userState, setUserState] = useState({
     _id: '',
     googleId: '',
@@ -20,8 +23,16 @@ function App() {
     name: '',
     isAuthenticated: false
   })
-  // prevent components from rendering until useEffect finishes
-  const [isLoading, setIsLoading] = useState(true)
+  const [drawerState, setDrawerState] = useState({
+    isOpen: false
+  })
+
+  drawerState.toggleDrawer = open => event => {
+    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return
+    }
+    setDrawerState({ ...drawerState, isOpen: open })
+  }
 
   useEffect(() => {
     // check if user has been authenticated
