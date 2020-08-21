@@ -17,7 +17,6 @@ import {
 //  icons
 import HomeIcon from '@material-ui/icons/Home'
 import ArchiveIcon from '@material-ui/icons/Archive'
-import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import DrawerContext from '../../utils/DrawerContext'
 
 const useStyles = makeStyles({

@@ -10,6 +10,7 @@ import Home from './pages/Home'
 import Archive from './pages/Archive'
 import Login from './pages/Login'
 import NavDrawer from './components/NavDrawer'
+import NavBar from './components/NavBar'
 import UserContext from './utils/UserContext'
 import DrawerContext from './utils/DrawerContext'
 import { checkGoogleAuth } from './utils/UserAuthApi'
@@ -66,7 +67,8 @@ function App() {
                 <div>
                   {userState.isAuthenticated
                     ? (
-                      <NavDrawer />
+                      // <NavDrawer />
+                      <NavBar />
                     )
                     : null
                   }

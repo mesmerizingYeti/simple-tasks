@@ -13,8 +13,7 @@ import GoogleButton from 'react-google-button'
 
 import Logo from '../../components/Logo'
 import LoginForm from '../../components/LoginForm'
-import GoogleSignInButton from '../../components/GoogleSignInButton'
-import shadows from '@material-ui/core/styles/shadows'
+import GoogleLoginButton from '../../components/GoogleLoginButton'
 
 const useStyles = makeStyles({
   root: {
@@ -31,9 +30,9 @@ const useStyles = makeStyles({
     marginBottom: '0.5rem'
   },
   logo: {
-    width: '9rem',
-    height: '9rem',
-    borderRadius: '4px',
+    width: '7rem',
+    height: '7rem',
+    borderRadius: '50%',
     WebkitBoxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
     marginBottom: '0.5rem'
   },
@@ -58,7 +57,7 @@ const Login = () => {
           <Grid item xs={8}>
             <Grid container spacing={2} justify="center" alignItems="center">
               <Grid container item xs={12} justify="center" alignItems="center">
-                <GoogleButton
+                <GoogleLoginButton
                   onClick={() => {
                     history.push('/auth/google')
                     history.go(0)
