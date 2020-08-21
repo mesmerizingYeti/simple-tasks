@@ -29,14 +29,14 @@ module.exports = app => {
   app.get('/auth/authenicated', (req, res) => {
     if (req.user) {
       res.json({
-        success: true,
+        isAuthenticated: true,
         message: 'User authenticated',
         user: req.user,
         cookies: req.cookies
       })
     } else {
       res.json({
-        success: false,
+        isAuthenticated: false,
         message: 'User not authenticated',
         user: null,
         cookies: null
