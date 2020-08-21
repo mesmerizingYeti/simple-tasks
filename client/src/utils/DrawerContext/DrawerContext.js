@@ -2,7 +2,7 @@ import { createContext } from 'react'
 
 const DrawerContext = createContext({
   isOpen: false,
-  toggleDrawer: () => {}
+  setDrawer: () => {}
 })
 
 export default DrawerContext

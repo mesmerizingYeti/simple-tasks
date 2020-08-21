@@ -9,13 +9,16 @@ import {
 import Home from './pages/Home'
 import Archive from './pages/Archive'
 import Login from './pages/Login'
+import NavDrawer from './components/NavDrawer'
 import UserContext from './utils/UserContext'
 import DrawerContext from './utils/DrawerContext'
 import { checkGoogleAuth } from './utils/UserAuthApi'
 
 function App() {
-  // prevent components from rendering until useEffect finishes
+  // state for preventing components from rendering until useEffect finishes
   const [isLoading, setIsLoading] = useState(true)
+
+  // store user data
   const [userState, setUserState] = useState({
     _id: '',
     googleId: '',
@@ -23,11 +26,13 @@ function App() {
     name: '',
     isAuthenticated: false
   })
+
+  // control NavDrawer
   const [drawerState, setDrawerState] = useState({
     isOpen: false
   })
-
-  drawerState.toggleDrawer = open => event => {
+  // set NavDrawer state
+  drawerState.setDrawer = open => event => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return
     }
@@ -51,14 +56,20 @@ function App() {
   }, [])
 
   return (
-    <div>
+    <DrawerContext.Provider value={drawerState}>
       <UserContext.Provider value={userState}>
         {isLoading
           ? <div>LOADING...</div>
           : (
-            <Router>
-              <div>
-                <UserContext.Provider value={userState}>
+            <div>
+              <Router>
+                <div>
+                  {userState.isAuthenticated
+                    ? (
+                      <NavDrawer />
+                    )
+                    : null
+                  }
                   <Switch>
                     <Route path="/archive">
                       {userState.isAuthenticated
@@ -79,13 +90,13 @@ function App() {
                       }
                     </Route>
                   </Switch>
-                </UserContext.Provider>
-              </div>
-            </Router>
+                </div>
+              </Router>
+            </div>
           )
         }
       </UserContext.Provider>
-    </div>
+    </DrawerContext.Provider>
   )
 }
 

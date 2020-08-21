@@ -5,9 +5,7 @@ import {
   withRouter
 } from 'react-router-dom'
 import {
-  makeStyles,
-  ThemeProvider,
-  createMuiTheme
+  makeStyles
 } from '@material-ui/core/styles'
 import {
   SwipeableDrawer,
@@ -54,14 +52,14 @@ const NavDrawer = withRouter(props => <NavDrawerGuts {...props} />)
 const NavDrawerGuts = props => {
   const classes = useStyles()
 
-  const { isOpen, toggleDrawer } = useContext(DrawerContext)
+  const { isOpen, setDrawer } = useContext(DrawerContext)
 
   const sideList = () => (
     <div
       className={classes.list}
       role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
+      onClick={setDrawer(false)}
+      onKeyDown={setDrawer(false)}
     >
       <List>
         {/* home */}
@@ -122,8 +120,8 @@ const NavDrawerGuts = props => {
   return (
     <SwipeableDrawer
       open={isOpen}
-      onClose={toggleDrawer(false)}
-      onOpen={toggleDrawer(true)}
+      onClose={setDrawer(false)}
+      onOpen={setDrawer(true)}
     >
       {sideList()}
     </SwipeableDrawer>
