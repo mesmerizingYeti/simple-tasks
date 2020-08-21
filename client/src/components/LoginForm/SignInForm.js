@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   }
 })
 
-const SignInForm = () => {
+const LoginForm = () => {
   const classes = useStyles()
 
   return (
@@ -65,11 +65,11 @@ const SignInForm = () => {
           color="primary"
           variant="contained"
         >
-          Sign In
+          Login
         </Button>
       </Grid>
     </Grid>
   )
 }
 
-export default SignInForm
+export default LoginForm

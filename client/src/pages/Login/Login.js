@@ -4,25 +4,25 @@ import {
   Typography,
   Button
 } from '@material-ui/core'
-import SignInForm from '../../components/SignInForm'
+import LoginForm from '../../components/LoginForm'
 import GoogleSignInButton from '../../components/GoogleSignInButton'
 import axios from 'axios'
 
 const Login = () => {
   return (
     <div>
-      <Typography variant="h3">Sign In Page</Typography>
+      <Typography variant="h3">Login Page</Typography>
       {/*
-        Sign in form
+        Login form
           Circle with lock icon
-          Sign in
+          Login
           Email Address* (TextField)
           Password* (TextField)
-          Sign In (Button)
-        Google Sign In
+          Login (Button)
+        Google Login
         Forgot password?    Don't have an account? Sign Up
       */}
-      <SignInForm />
+      <LoginForm />
       <br />
       <Button 
         variant="contained" 
@@ -31,7 +31,7 @@ const Login = () => {
           axios.get('/auth/google')
         }}
       >
-        Google Sign In
+        Google Login
       </Button>
     </div>
   )

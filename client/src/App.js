@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 import Home from './pages/Home'
 import Archive from './pages/Archive'
-import SignIn from './pages/SignIn'
+import Login from './pages/Login'
 import UserContext from './utils/UserContext'
 
 function App() {
@@ -29,8 +29,8 @@ function App() {
             <Route path="/archive">
               <Archive />
             </Route>
-            <Route path="/SignIn">
-              <SignIn />
+            <Route path="/login">
+              <Login />
             </Route>
             <Route exact path="/">
               <Home />
