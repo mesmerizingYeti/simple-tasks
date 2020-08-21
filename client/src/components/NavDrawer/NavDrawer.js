@@ -96,23 +96,6 @@ const NavDrawerGuts = props => {
             </Grid>
           </ListItem>
         </Link>
-        {/* logout */}
-        <Link to="/auth/logout" className={classes.logout}>
-          <ListItem button key={'Logout'}>
-            <Grid container spacing={3}>
-              <Grid item xs={4}>
-                <ExitToAppIcon />
-              </Grid>
-              <Grid item xs={8} className={classes.gridItem}>
-                <Typography
-                  className={classes.typography}
-                  component="span">
-                  Logout
-                </Typography>
-              </Grid>
-            </Grid>
-          </ListItem>
-        </Link>
       </List>
     </div>
   )
