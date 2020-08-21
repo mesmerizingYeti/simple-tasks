@@ -22,7 +22,7 @@ const Login = () => {
         Google Login
         Forgot password?    Don't have an account? Sign Up
       */}
-      <LoginForm />
+      {/* <LoginForm /> */}
       <br />
       <Button 
         variant="contained" 
