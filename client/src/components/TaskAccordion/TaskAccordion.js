@@ -14,7 +14,6 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 import EditIcon from '@material-ui/icons/Edit'
-import DeleteIcon from '@material-ui/icons/Delete'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import { makeStyles } from '@material-ui/core/styles'
 import DeleteTaskDialog from '../DeleteTaskDialog'
@@ -22,7 +21,7 @@ import DeleteTaskDialog from '../DeleteTaskDialog'
 const useStyles = makeStyles({
   root: {
     marginTop: '0.5rem',
-    marginBottom: '0.5rem'
+    marginBottom: '0.5rem',
   },
   handle: {
     cursor: 'move',
@@ -34,11 +33,9 @@ const useStyles = makeStyles({
   formUnchecked: {
     textDecoration: 'none'
   },
-  accordionChecked: {
-
-  },
-  accordionUnchecked: {
-
+  accordion: {
+    backgroundColor: "#B4B8AB",
+    color: "black"
   }
 })
 
@@ -61,7 +58,7 @@ const TaskAccordion = props => {
           </Grid>
         </Grid>
         <Grid item xs={11}>
-          <Accordion className={props.isChecked ? classes.accordionChecked : classes.accordionUnchecked}>
+          <Accordion className={classes.accordion}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-label="Expand"
@@ -74,7 +71,7 @@ const TaskAccordion = props => {
                 aria-label="Acknowledge"
                 onClick={props.setChecked(props.index, !props.isChecked)}
                 onFocus={(event) => event.stopPropagation()}
-                control={<Checkbox />}
+                control={<Checkbox color="primary" />}
                 label={props.title}
               />
             </AccordionSummary>

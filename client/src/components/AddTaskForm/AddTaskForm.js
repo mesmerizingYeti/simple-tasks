@@ -23,13 +23,13 @@ const AddTaskForm = () => {
         onClick={handleAddFormOpen}
         startIcon={<AddIcon />}
       >
-        New Task
+        Add Task
       </Button>
       <Dialog open={addFormOpen} onClose={handleAddFormCancel} aria-labelledby="form-task-title">
         <DialogTitle id="form-task-title">Add Task</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To add a new task, enter at least a title.
+            Enter at least a title.
           </DialogContentText>
           <TextField
             autoFocus
@@ -37,7 +37,7 @@ const AddTaskForm = () => {
             value={title}
             onChange={handleInputChange}
             margin="dense"
-            label="Task Title"
+            label="Title"
             type="text"
             fullWidth
             />
