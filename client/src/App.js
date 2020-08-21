@@ -40,39 +40,41 @@ function App() {
   }, [])
 
   return (
-    <UserContext.Provider value={userState}>
-      {isLoading
-        ? <div>LOADING...</div>
-        : (
-          <Router>
-            <div>
-              <UserContext.Provider value={userState}>
-                <Switch>
-                  <Route path="/archive">
-                    {userState.isAuthenticated
-                      ? <Archive />
-                      : <Redirect to="/" />
-                    }
-                  </Route>
-                  <Route path="/home">
-                    {userState.isAuthenticated
-                      ? <Home />
-                      : <Redirect to="/" />
-                    }
-                  </Route>
-                  <Route exact path="/">
-                    {userState.isAuthenticated
-                      ? <Redirect to="/home" />
-                      : <Login />
-                    }
-                  </Route>
-                </Switch>
-              </UserContext.Provider>
-            </div>
-          </Router>
-        )
-      }
-    </UserContext.Provider>
+    <div>
+      <UserContext.Provider value={userState}>
+        {isLoading
+          ? <div>LOADING...</div>
+          : (
+            <Router>
+              <div>
+                <UserContext.Provider value={userState}>
+                  <Switch>
+                    <Route path="/archive">
+                      {userState.isAuthenticated
+                        ? <Archive />
+                        : <Redirect to="/" />
+                      }
+                    </Route>
+                    <Route path="/home">
+                      {userState.isAuthenticated
+                        ? <Home />
+                        : <Redirect to="/" />
+                      }
+                    </Route>
+                    <Route exact path="/">
+                      {userState.isAuthenticated
+                        ? <Redirect to="/home" />
+                        : <Login />
+                      }
+                    </Route>
+                  </Switch>
+                </UserContext.Provider>
+              </div>
+            </Router>
+          )
+        }
+      </UserContext.Provider>
+    </div>
   )
 }
 
