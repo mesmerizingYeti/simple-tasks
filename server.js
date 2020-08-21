@@ -2,7 +2,6 @@ require('./config')
 require('dotenv').config()
 const express = require('express')
 const { join } = require('path')
-const cors = require('cors')
 const passport = require('passport')
 const { Strategy } = require('passport-local')
 const { Strategy:JWTStrategy, ExtractJwt } = require('passport-jwt')
@@ -35,21 +34,19 @@ passport.use(new JWTStrategy({
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: 'http://localhost:3000/auth/google/redirect'
-}, (accessToken, refreshToken, profile, cb) => 
-  User.findOrCreate({ _id: profile.id })
-    .then(user => cb(null, user))
-    .catch(e => cb(e))
-))
-
-// set up cors to allow us to accept requests from our client
-app.use(
-  cors({
-    origin: "http://localhost:3000", // allow to server to accept request from different origin
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true // allow session cookie from browser to pass through
-  })
-)
+  callbackURL: '/auth/google/redirect'
+}, (accessToken, refreshToken, profile, cb) => {
+  User.findOne({ _id: profile.id })
+    .then(currentUser => {
+      if (currentUser) {
+        cb(null, currentUser)
+      } else {
+        console.log('ID: ' + profile.id)
+        console.log('Email: ' + profile.email)
+        cb (null, { _id: profile.id, email: profile.email })
+      }
+    })
+}))
 
 require('./routes')(app)
 

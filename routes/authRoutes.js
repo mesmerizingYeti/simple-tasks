@@ -29,7 +29,7 @@ module.exports = app => {
   app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }))
 
   // When google sign in is successful, send user info
-  app.get('/auth/signin/success', (req, res) => {
+  app.get('/auth/signin/success', passport.authenticate('google'), (req, res) => {
     if (req.user) {
       res.json({ 
         success: true,
@@ -56,8 +56,9 @@ module.exports = app => {
 
   // Redirect to home page after successful google sign in
   app.get('auth/google/redirect', passport.authenticate('google', {
-    successRedirect: '/',
     failureRedirect: '/auth/signin/failure'
-  })) 
+  }), (req, res) => {
+    res.json(req.user)
+  }) 
 
 }

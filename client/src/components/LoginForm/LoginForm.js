@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   }
 })
 
-const SignInForm = () => {
+const LoginForm = () => {
   const classes = useStyles()
 
   return (
@@ -72,4 +72,4 @@ const SignInForm = () => {
   )
 }
 
-export default SignInForm
+export default LoginForm

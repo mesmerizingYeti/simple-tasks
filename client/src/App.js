@@ -29,7 +29,7 @@ function App() {
             <Route path="/archive">
               <Archive />
             </Route>
-            <Route path="/SignIn">
+            <Route path="/signin">
               <SignIn />
             </Route>
             <Route exact path="/">
