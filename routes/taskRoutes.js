@@ -11,7 +11,7 @@ const authCheck = (req, res, next) => {
 module.exports = app => {
 
   // GET ONE Task
-  app.get('/tasks/:id', authCheck, (req, res) => {
+  app.get('/tasks/single/:id', authCheck, (req, res) => {
     Task.findById(req.params.id)
     .then(task => req.json(task))
     .catch(err => console.log(err))
@@ -27,7 +27,7 @@ module.exports = app => {
   // GET ALL Tasks for User
   app.get('/tasks/user', authCheck, (req, res) => {
     Task.find({ user: req.user._id })
-      .then(tasks => req.json(tasks))
+      .then(tasks => res.json(tasks))
       .catch(err => console.log(err))
   })
 
@@ -37,7 +37,7 @@ module.exports = app => {
     Task.create(req.body)
       // add task to user's taskList
       .then(task => {
-        User.update({ _id: task.user }, { $push: { taskList: task._id }})
+        User.updateOne({ _id: task.user }, { $push: { taskList: task._id }})
           .catch(err => console.log(err))
         res.json(task)
       })
@@ -53,7 +53,8 @@ module.exports = app => {
 
   // DELETE ONE Task
   app.delete('/tasks/:id', authCheck, (req, res) => {
-    Task.deleteOne({ _id: req.params.id })
+    User.updateOne({ _id: req.user._id }, { $pull: { taskList: req.params.id }})
+      .then(() => Task.deleteOne({ _id: req.params.id }))
       .then(() => res.sendStatus(200))
       .catch(err => console.log(err))
   })

@@ -18,7 +18,7 @@ const TaskDraggableList = () => {
     >
       {taskList.map((task, index) => {
         return (
-          <div key={task.id}>
+          <div key={task._id}>
             <TaskAccordion
               index={index}
               setChecked={handleTaskCheck}

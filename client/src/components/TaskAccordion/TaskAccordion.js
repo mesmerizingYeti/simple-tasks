@@ -104,7 +104,7 @@ const TaskAccordion = props => {
               >
                 Archive
               </Button>
-              <DeleteTaskDialog title={"Delete " + props.title} id={props.id} />
+              <DeleteTaskDialog title={"Delete " + props.title} _id={props._id} />
             </AccordionActions>
           </Accordion>
         </Grid>

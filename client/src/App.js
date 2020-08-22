@@ -14,6 +14,7 @@ import NavBar from './components/NavBar'
 import UserContext from './utils/UserContext'
 import DrawerContext from './utils/DrawerContext'
 import { checkGoogleAuth } from './utils/UserAuthApi'
+import TaskApi from './utils/TaskApi'
 
 function App() {
   // state for preventing components from rendering until useEffect finishes
@@ -48,11 +49,19 @@ function App() {
         const { isAuthenticated, user } = data
         // user has value if isAuthenticated is true
         if (isAuthenticated) {
-          const { _id, googleId, email, name, taskList } = user
-          setUserState({ ...userState, isAuthenticated, _id, googleId, email, name, taskList })
+          const { _id, googleId, email, name } = user
+          // need to get populated taskList
+          TaskApi.getUserTasks()
+            .then(({ data: taskList }) => {
+              setUserState({ ...userState, isAuthenticated, _id, googleId, email, name, taskList })
+              // finished loading user data
+              setIsLoading(false)
+            })
+            .catch(err => console.log(err))
+        } else {
+          // nothing to load
+          setIsLoading(false)
         }
-        // finished loading user data
-        setIsLoading(false)
       })
       .catch(err => console.error(err))
   }, [])

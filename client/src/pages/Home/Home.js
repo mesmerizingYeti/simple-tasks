@@ -92,7 +92,11 @@ const Home = () => {
         title: homeState.title,
         notes: homeState.notes,
         isChecked: false,
-        isArchived: false
+        isArchived: false,
+        // do not want to use 0 for priority
+        // positive numbers are unarchived
+        // negative numbers are archived
+        priority: homeState.taskList.length + 1
       }
       TaskApi.createTask(newTask)
         .then(task => {
@@ -104,8 +108,12 @@ const Home = () => {
   }
 
   homeState.handleDeleteTask = id => event => {
-    let taskList = homeState.taskList.filter(task => task._id !== id)
-    setHomeState({ ...homeState, taskList })
+    TaskApi.deleteTask(id)
+      .then(() => {
+        let taskList = homeState.taskList.filter(task => task._id !== id)
+        setHomeState({ ...homeState, taskList })
+      })
+      .catch(err => console.error(err))
   }
 
   return (

@@ -44,7 +44,7 @@ const DeleteTaskDialog = props => {
           <Button onClick={handleClose} variant="contained">
             Cancel
           </Button>
-          <Button onClick={handleDeleteTask(props.id)} color="secondary" variant="contained">
+          <Button onClick={handleDeleteTask(props._id)} color="secondary" variant="contained">
             Delete
           </Button>
         </DialogActions>
