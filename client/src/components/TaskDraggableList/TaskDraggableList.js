@@ -11,7 +11,7 @@ const TaskDraggableList = () => {
     <ReactSortable 
       list={taskList} 
       setList={setTaskList}
-      handle='.makeStyles-handle-2'
+      handle='.makeStyles-taskAccordionHandle-8'
       animation={150}
       delayOnTouchStart={true}
       delay={2}

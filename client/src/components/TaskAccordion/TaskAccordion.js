@@ -19,11 +19,11 @@ import { makeStyles } from '@material-ui/core/styles'
 import DeleteTaskDialog from '../DeleteTaskDialog'
 
 const useStyles = makeStyles({
-  root: {
+  taskAccordion: {
     marginTop: '0.5rem',
     marginBottom: '0.5rem',
   },
-  handle: {
+  taskAccordionHandle: {
     cursor: 'move',
     cursor: '-webkit-grabbing'
   },
@@ -43,7 +43,7 @@ const TaskAccordion = props => {
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
+    <div className={classes.taskAccordion}>
       <Grid
         container
         wrap="nowrap"
@@ -53,7 +53,7 @@ const TaskAccordion = props => {
         <Grid item xs={1}>
           <Grid container alignItems="center" justify="center">
             <Grid item>
-              <UnfoldMoreIcon className={classes.handle} />
+              <UnfoldMoreIcon className={classes.taskAccordionHandle} />
             </Grid>
           </Grid>
         </Grid>
