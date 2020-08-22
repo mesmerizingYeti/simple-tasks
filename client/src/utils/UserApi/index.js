@@ -1,0 +1,1 @@
+export { default, getUser, getUsers, createUser, updateUser, deleteUser } from './UserApi'

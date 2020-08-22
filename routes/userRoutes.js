@@ -10,17 +10,17 @@ const authCheck = (req, res, next) => {
 
 module.exports = app => {
 
-  // GET ALL Users
-  app.get('/users', authCheck, (req, res) => {
-    User.find()
-      .then(users => res.json(users))
-      .catch(e => console.log(e))
-  })
-
   // GET ONE User
   app.get('/users/:id', authCheck, (req, res) => {
     User.find({ _id: req.params.id })
       .then(user => red.json(user))
+      .catch(e => console.log(e))
+  })
+
+  // GET ALL Users
+  app.get('/users', authCheck, (req, res) => {
+    User.find()
+      .then(users => res.json(users))
       .catch(e => console.log(e))
   })
 

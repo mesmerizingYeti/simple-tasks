@@ -10,24 +10,31 @@ const authCheck = (req, res, next) => {
 
 module.exports = app => {
 
-  // GET ALL Tasks for User
+  // GET ONE Task
+  app.get('/tasks/:id', authCheck, (req, res) => {
+    Task.findById(req.params.id)
+    .then(task => req.json(task))
+    .catch(e => console.log(e))
+  })
+
+  // GET ALL Tasks
   app.get('/tasks', authCheck, (req, res) => {
     Task.find()
-      .then((tasks) => req.json(tasks))
+      .then(tasks => res.json(tasks))
       .catch(e => console.log(e))
   })
 
-  // GET ONE Task
-  app.get('/tasks/:id', authCheck, (req, res) => {
-    Task.find({ _id: req.params.id })
-      .then((task) => req.json(task))
+  // GET ALL Tasks for User
+  app.get('/tasks/user', authCheck, (req, res) => {
+    Task.find({ user: req.user._id })
+      .then(tasks => req.json(tasks))
       .catch(e => console.log(e))
   })
 
   // POST ONE Task
   app.post('/tasks', authCheck, (req, res) => {
     Task.create(req.body)
-      .then((task) => req.json(task))
+      .then(task => req.json(task))
       .catch(e => console.log(e))
   })
 
