@@ -1,9 +1,5 @@
-import React,
-{ useContext } from 'react'
-import {
-  Link,
-  withRouter
-} from 'react-router-dom'
+import React, { useContext } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   makeStyles
 } from '@material-ui/core/styles'
@@ -11,8 +7,8 @@ import {
   SwipeableDrawer,
   List,
   ListItem,
-  Grid,
-  Typography
+  ListItemIcon,
+  ListItemText
 } from '@material-ui/core'
 //  icons
 import HomeIcon from '@material-ui/icons/Home'
@@ -21,35 +17,13 @@ import DrawerContext from '../../utils/DrawerContext'
 
 const useStyles = makeStyles({
   list: {
-    width: 250,
+    width: 160,
   },
-  fullList: {
-    width: 'auto',
-  },
-  link: {
-    color: '#424242',
-    textDecorationLine: 'none'
-  },
-  logout: {
-    color: 'red',
-    textDecorationLine: 'none'
-  },
-  gridItem: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    display: 'flex'
-  },
-  typography: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    display: 'flex'
-  }
 })
 
-const NavDrawer = withRouter(props => <NavDrawerGuts {...props} />)
-
-const NavDrawerGuts = props => {
+const NavDrawer = props => {
   const classes = useStyles()
+  const history = useHistory()
 
   const { isOpen, setDrawer } = useContext(DrawerContext)
 
@@ -62,39 +36,29 @@ const NavDrawerGuts = props => {
     >
       <List>
         {/* home */}
-        <Link to="/home" className={classes.link}>
-          <ListItem button key={'Home'}>
-            <Grid container spacing={3}>
-              <Grid item xs={4}>
-                <HomeIcon />
-              </Grid>
-              <Grid item xs={8} className={classes.gridItem}>
-                <Typography
-                  className={classes.typography}
-                  component="span">
-                  Home
-                </Typography>
-              </Grid>
-            </Grid>
-          </ListItem>
-        </Link>
+        <ListItem 
+          button 
+          key="home"
+          onClick={() =>{
+            history.push('/home')
+            history.go(0)
+          }}
+        >
+          <ListItemIcon><HomeIcon /></ListItemIcon>
+          <ListItemText primary={"Home"} />
+        </ListItem>
         {/* archive */}
-        <Link to="/archive" className={classes.link}>
-          <ListItem button key={'Archive'}>
-            <Grid container spacing={3}>
-              <Grid item xs={4}>
-                <ArchiveIcon />
-              </Grid>
-              <Grid item xs={8} className={classes.gridItem}>
-                <Typography
-                  className={classes.typography}
-                  component="span">
-                  Archive
-                </Typography>
-              </Grid>
-            </Grid>
-          </ListItem>
-        </Link>
+        <ListItem 
+          button 
+          key="archive"
+          onClick={() =>{
+            history.push('/archive')
+            history.go(0)
+          }}
+        >
+          <ListItemIcon><ArchiveIcon /></ListItemIcon>
+          <ListItemText primary={"Archive"} />
+        </ListItem>
       </List>
     </div>
   )

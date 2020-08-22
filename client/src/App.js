@@ -67,8 +67,10 @@ function App() {
                 <div>
                   {userState.isAuthenticated
                     ? (
-                      // <NavDrawer />
-                      <NavBar />
+                      <>
+                        <NavDrawer />
+                        {/* <NavBar /> */}
+                      </>
                     )
                     : null
                   }
