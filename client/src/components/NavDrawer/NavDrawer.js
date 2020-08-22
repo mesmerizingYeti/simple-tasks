@@ -8,20 +8,24 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  Divider
 } from '@material-ui/core'
-//  icons
 import HomeIcon from '@material-ui/icons/Home'
 import ArchiveIcon from '@material-ui/icons/Archive'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import DrawerContext from '../../utils/DrawerContext'
 
 const useStyles = makeStyles({
   list: {
     width: 160,
   },
+  redColor : {
+    color: "red"
+  }
 })
 
-const NavDrawer = props => {
+const NavDrawer = () => {
   const classes = useStyles()
   const history = useHistory()
 
@@ -59,6 +63,20 @@ const NavDrawer = props => {
           <ListItemIcon><ArchiveIcon /></ListItemIcon>
           <ListItemText primary={"Archive"} />
         </ListItem>
+        <Divider />
+        {/* logout */}
+        <ListItem 
+          button 
+          key="logout"
+          onClick={() =>{
+            history.push('/auth/logout')
+            history.go(0)
+          }}
+        >
+          <ListItemIcon className={classes.redColor}><ExitToAppIcon /></ListItemIcon>
+          <ListItemText primary={"Logout"} className={classes.redColor} />
+        </ListItem>
+
       </List>
     </div>
   )

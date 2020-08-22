@@ -1,12 +1,5 @@
-import React,
-{
-  useContext,
-  useState
-} from 'react'
-import {
-  withRouter,
-  useHistory
-} from 'react-router-dom'
+import React, { useContext } from 'react'
+import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   AppBar,
@@ -14,7 +7,6 @@ import {
   IconButton,
   Typography
 } from '@material-ui/core'
-//  icons
 import MenuIcon from '@material-ui/icons/Menu'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import DrawerContext from '../../utils/DrawerContext'
@@ -25,35 +17,27 @@ const useStyles = makeStyles(theme => ({
   },
   logoutButton: {
     marginRight: theme.spacing(2),
-    color: "#f44336"
+    color: "white"
   },
-  drawerButton: {
-    color: "#f44336"
+  menuButton: {
+    color: "white"
   },
   title: {
     flexGrow: 1,
   },
 }))
 
-const NavBar = withRouter(props => <NavBarGuts {...props} />)
-
-const NavBarGuts = props => {
+const NavBar = () => {
   const classes = useStyles()
-  const history = useHistory()
   const { setDrawer } = useContext(DrawerContext)
-
-  const handleLogout = () => {
-    history.push('/auth/logout')
-    history.go(0)
-  }
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             edge="start"
-            className={classes.drawerButton}
+            className={classes.menuButton}
             color='inherit'
             aria-label="menu"
             onClick={setDrawer(true)}>
@@ -62,20 +46,9 @@ const NavBarGuts = props => {
           <Typography variant="h6" className={classes.title}>
             Simple Tasks
           </Typography>
-          <div>
-            <IconButton
-              className={classes.logoutButton}
-              aria-label="logout"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleLogout}
-              color="inherit"
-            >
-              <ExitToAppIcon />
-            </IconButton>
-          </div>
         </Toolbar>
       </AppBar>
+      <Toolbar />
     </div>
   )
 }

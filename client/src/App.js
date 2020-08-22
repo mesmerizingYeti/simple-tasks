@@ -69,7 +69,7 @@ function App() {
                     ? (
                       <>
                         <NavDrawer />
-                        {/* <NavBar /> */}
+                        <NavBar />
                       </>
                     )
                     : null
