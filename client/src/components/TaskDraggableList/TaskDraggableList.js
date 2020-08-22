@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { ReactSortable } from 'react-sortablejs'
 import TaskAccordion from '../TaskAccordion'
 import HomeContext from '../../utils/HomeContext'

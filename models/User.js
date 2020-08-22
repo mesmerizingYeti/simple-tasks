@@ -3,7 +3,7 @@ module.exports = (model, Schema) => {
     googleId: String,
     name: String,
     email: String,
-    tasksList: [{ type: Schema.Types.ObjectId, ref: 'Task' }]
+    taskList: [{ type: Schema.Types.ObjectId, ref: 'Task' }]
   }, { 
     timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } 
   })
