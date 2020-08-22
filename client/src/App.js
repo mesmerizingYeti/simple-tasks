@@ -25,6 +25,7 @@ function App() {
     googleId: '',
     email: '',
     name: '',
+    taskList: [],
     isAuthenticated: false
   })
 
@@ -47,8 +48,8 @@ function App() {
         const { isAuthenticated, user } = data
         // user has value if isAuthenticated is true
         if (isAuthenticated) {
-          const { _id, googleId, email, name } = user
-          setUserState({ ...userState, isAuthenticated, _id, googleId, email, name })
+          const { _id, googleId, email, name, taskList } = user
+          setUserState({ ...userState, isAuthenticated, _id, googleId, email, name, taskList })
         }
         // finished loading user data
         setIsLoading(false)

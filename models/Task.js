@@ -3,7 +3,7 @@ module.exports = (model, Schema) => {
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     title: String,
     notes: String,
-    order: Number,
+    priority: Number,
     isChecked: Boolean,
     isArchived: Boolean
   }, {

@@ -5,6 +5,7 @@ const UserContext = createContext({
   googleId: '',
   email: '',
   name: '',
+  taskList: [],
   isAuthenticated: false
 })
 
