@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import Typography from '@material-ui/core/Typography'
+import TitleBanner from '../../components/TitleBanner'
 import AddTaskForm from '../../components/AddTaskForm'
 import TaskDraggableList from '../../components/TaskDraggableList'
 import NoTasks from '../../components/NoTasks'
@@ -8,28 +9,28 @@ import UserContext from '../../utils/UserContext'
 
 // Temporary task list for development purposes
 const itemList = [{
-  title: 'Item 1', 
+  title: 'Item 1',
   _id: '1',
   notes: 'Notes for the first item.',
   isChecked: false,
   isArchived: false,
   priority: 3
 }, {
-  title: 'Item 2', 
+  title: 'Item 2',
   _id: '22',
   notes: 'Notes for the second item.',
   isChecked: false,
   isArchived: false,
   priority: 2
 }, {
-  title: 'Item 3', 
+  title: 'Item 3',
   _id: '333',
   notes: 'Notes for the third item.',
   isChecked: true,
   isArchived: false,
   priority: 1
 }, {
-  title: 'Item 4', 
+  title: 'Item 4',
   _id: '4444',
   notes: 'Notes for the fourth item.',
   isChecked: false,
@@ -78,16 +79,16 @@ const Home = () => {
   }
 
   homeState.handleAddFormCancel = event => {
-    setHomeState({ ...homeState, title: '', notes: '', addFormOpen: false})
+    setHomeState({ ...homeState, title: '', notes: '', addFormOpen: false })
   }
 
   homeState.handleAddFormAdd = event => {
-    let newTask = { 
-      title: homeState.title, 
-      notes: homeState.notes, 
+    let newTask = {
+      title: homeState.title,
+      notes: homeState.notes,
       _id: homeState.title,
       isChecked: false,
-      isArchived: false 
+      isArchived: false
     }
     let taskList = [...homeState.taskList, newTask]
     setHomeState({ ...homeState, taskList, title: '', notes: '', addFormOpen: false })
@@ -101,11 +102,12 @@ const Home = () => {
   return (
     <div>
       <HomeContext.Provider value={homeState}>
-        <Typography variant="h3">Home Page</Typography>
+        <TitleBanner title="Home Page" />
+        <br />
         <AddTaskForm />
         <br />
         {homeState.taskList.length === 0
-          ? <NoTasks page="home"/>
+          ? <NoTasks page="home" />
           : <TaskDraggableList />
         }
       </HomeContext.Provider>
