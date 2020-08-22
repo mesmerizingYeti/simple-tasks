@@ -107,10 +107,19 @@ const Home = () => {
     }
   }
 
-  homeState.handleDeleteTask = id => event => {
-    TaskApi.deleteTask(id)
+  homeState.handleDeleteTask = _id => event => {
+    TaskApi.deleteTask(_id)
       .then(() => {
-        let taskList = homeState.taskList.filter(task => task._id !== id)
+        let taskList = homeState.taskList.filter(task => task._id !== _id)
+        setHomeState({ ...homeState, taskList })
+      })
+      .catch(err => console.error(err))
+  }
+
+  homeState.handleArchiveTask = _id => event => {
+    TaskApi.updateTask({ _id }, { isArchived: true })
+      .then(() => {
+        let taskList = homeState.taskList.filter(task => task._id !== _id)
         setHomeState({ ...homeState, taskList })
       })
       .catch(err => console.error(err))

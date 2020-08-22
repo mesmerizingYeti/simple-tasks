@@ -17,6 +17,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import { makeStyles } from '@material-ui/core/styles'
 import DeleteTaskDialog from '../DeleteTaskDialog'
+import HomeContext from '../../utils/HomeContext'
 
 const useStyles = makeStyles({
   taskAccordion: {
@@ -41,6 +42,7 @@ const useStyles = makeStyles({
 
 const TaskAccordion = props => {
   const classes = useStyles()
+  const { handleArchiveTask } = useContext(HomeContext)
 
   return (
     <div className={classes.taskAccordion}>
@@ -65,15 +67,20 @@ const TaskAccordion = props => {
               aria-controls="additional-actions1-content"
               id="additional-actions1-header"
             >
-              <FormControlLabel
-                checked={props.isChecked}
-                className={props.isChecked ? classes.formChecked : classes.formUnchecked}
-                aria-label="Acknowledge"
-                onClick={props.setChecked(props.index, !props.isChecked)}
-                onFocus={(event) => event.stopPropagation()}
-                control={<Checkbox color="primary" />}
-                label={props.title}
-              />
+              {props.isArchived
+                ? <div>{props.title}</div>
+                : (
+                  <FormControlLabel
+                    checked={props.isChecked}
+                    className={props.isChecked ? classes.formChecked : classes.formUnchecked}
+                    aria-label="Acknowledge"
+                    onClick={props.setChecked(props.index, !props.isChecked)}
+                    onFocus={(event) => event.stopPropagation()}
+                    control={<Checkbox color="primary" />}
+                    label={props.title}
+                  />
+                )
+              }
             </AccordionSummary>
             <Divider />
             <AccordionDetails>
@@ -82,28 +89,43 @@ const TaskAccordion = props => {
               </Typography>
             </AccordionDetails>
             <AccordionActions>
-              <Button 
-                size="small" 
-                variant="contained" 
-                color="primary"
-                startIcon={<EditIcon />}
-                onClick={() => {
-                  // Add edit task dialog
-                }}
-              >
-                Edit
-              </Button>
-              <Button 
-                size="small" 
-                variant="contained"
-                startIcon={<ArchiveIcon />}
-                onClick={() =>{ 
-                  console.log(props)
-                  // update task in db and remove from local list
-                }}
-              >
-                Archive
-              </Button>
+              {props.isArchived
+                ? (
+                  <>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      startIcon={<ArchiveIcon />}
+                      onClick={handleUnarchiveTask(props._id)}
+                    >
+                      Unarchive
+                    </Button>
+                  </>
+                )
+                : (
+                  <>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="primary"
+                      startIcon={<EditIcon />}
+                      onClick={() => {
+                        // Add edit task dialog
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      startIcon={<ArchiveIcon />}
+                      onClick={handleArchiveTask(props._id)}
+                    >
+                      Archive
+                    </Button>
+                  </>
+                )
+              }
               <DeleteTaskDialog title={"Delete " + props.title} _id={props._id} />
             </AccordionActions>
           </Accordion>
