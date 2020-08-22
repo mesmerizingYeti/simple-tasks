@@ -24,13 +24,20 @@ passport.use(new GoogleStrategy({
   const { sub:googleId, name, email } = profile._json
   // try to find user in database
   User.findOne({ googleId })
+    .populate('taskList')
     .then(user => {
       // found user
       if (user) {
         cb(null, user)
       } else {
         // otherwise, create new user
-        User.create({ googleId, name, email })
+        const newUser = {
+          googleId, 
+          name, 
+          email,
+          taskList: []
+        }
+        User.create(newUser)
           .then(user => cb(null, user))
           .catch(err => cb(err))
       }

@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react'
-import Typography from '@material-ui/core/Typography'
 import TitleBanner from '../../components/TitleBanner'
 import AddTaskForm from '../../components/AddTaskForm'
 import TaskDraggableList from '../../components/TaskDraggableList'
 import NoTasks from '../../components/NoTasks'
 import HomeContext from '../../utils/HomeContext'
 import UserContext from '../../utils/UserContext'
+import TaskApi from '../../utils/TaskApi'
+import UserApi from '../../utils/UserApi'
 
 // Temporary task list for development purposes
 const itemList = [{
@@ -46,7 +47,7 @@ const itemList = [{
 }]
 
 const Home = () => {
-  const { taskList: unfilteredList, _id } = useContext(UserContext)
+  const { taskList: unfilteredList, _id: userId } = useContext(UserContext)
 
   // Remove archived tasks and sort by priority
   const filteredList = unfilteredList.filter(task => !task.isArchived)
@@ -83,15 +84,23 @@ const Home = () => {
   }
 
   homeState.handleAddFormAdd = event => {
-    let newTask = {
-      title: homeState.title,
-      notes: homeState.notes,
-      _id: homeState.title,
-      isChecked: false,
-      isArchived: false
+    // make sure user entered title for task
+    if (homeState.title !== "") {
+      // create new task
+      let newTask = {
+        user: userId,
+        title: homeState.title,
+        notes: homeState.notes,
+        isChecked: false,
+        isArchived: false
+      }
+      TaskApi.createTask(newTask)
+        .then(task => {
+          let taskList = [...homeState.taskList, newTask]
+          setHomeState({ ...homeState, taskList, title: '', notes: '', addFormOpen: false })
+        })
+        .catch(err => console.error(err))
     }
-    let taskList = [...homeState.taskList, newTask]
-    setHomeState({ ...homeState, taskList, title: '', notes: '', addFormOpen: false })
   }
 
   homeState.handleDeleteTask = id => event => {
