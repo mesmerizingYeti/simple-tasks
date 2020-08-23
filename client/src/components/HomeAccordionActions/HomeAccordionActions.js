@@ -1,4 +1,6 @@
 import React, { useContext } from 'react'
+import EditIcon from '@material-ui/icons/Edit'
+import ArchiveIcon from '@material-ui/icons/Archive'
 import HomeContext from '../../utils/HomeContext'
 
 const HomeAccordionActions = props => {
