@@ -68,7 +68,7 @@ const TaskAccordion = props => {
                     checked={props.isChecked}
                     className={props.isChecked ? classes.formChecked : classes.formUnchecked}
                     aria-label="Acknowledge"
-                    onClick={props.setChecked(props.index, !props.isChecked)}
+                    onClick={props.toggleChecked(props.index, !props.isChecked)}
                     onFocus={(event) => event.stopPropagation()}
                     control={<Checkbox color="primary" />}
                     label={props.title}

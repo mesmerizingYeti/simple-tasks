@@ -18,6 +18,8 @@ const AppContext = createContext({
   handleDeleteTask: () => {},
   handleToggleArchived: () => {},
   handleToggleChecked: () => {},
+  setHomeList: () => {},
+  setArchiveList: () => {},
 })
 
 export default AppContext

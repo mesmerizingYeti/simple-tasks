@@ -54,7 +54,7 @@ const Home = () => {
       <br />
       {homeList.length === 0
         ? <NoTasks page="home" />
-        : <TaskDraggableList />
+        : <TaskDraggableList page="home" />
       }
     </div>
   )

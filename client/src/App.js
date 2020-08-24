@@ -68,7 +68,7 @@ function App() {
     if (appState.addTitle !== "") {
       // create new task
       let newTask = {
-        user: userId,
+        user: userState._id,
         title: appState.addTitle,
         notes: appState.addNotes,
         isChecked: false,
@@ -166,6 +166,15 @@ function App() {
         setAppState({ ...appState, homeList: updatedList })
       })
       .catch(err => console.error(err))
+  }
+
+  // these functions are needed for ReactSortable to work
+  appState.setHomeList = homeList => {
+    setAppState({ ...appState, homeList })
+  }
+
+  appState.setArchiveList = archiveList => {
+    setAppState({ ...appState, archiveList })
   }
 
   // control NavDrawer
