@@ -1,8 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import {
   Button,
   TextField,
-  TextareaAutosize,
   Dialog,
   DialogActions,
   DialogContent,
@@ -10,10 +9,10 @@ import {
   DialogTitle
 } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import HomeContext from '../../utils/HomeContext'
+import AppContext from '../../utils/AppContext'
 
 const AddTaskForm = () => {
-  const { title, notes, handleInputChange, addFormOpen, handleAddFormOpen, handleAddFormCancel, handleAddFormAdd } = useContext(HomeContext)
+  const { addTitle, addNotes, handleInputChange, addFormOpen, handleAddFormOpen, handleAddFormCancel, handleAddTask } = useContext(AppContext)
 
   return (
     <div>
@@ -34,7 +33,7 @@ const AddTaskForm = () => {
           <TextField
             autoFocus
             name="title"
-            value={title}
+            value={addTitle}
             onChange={handleInputChange}
             margin="dense"
             label="Title"
@@ -44,7 +43,7 @@ const AddTaskForm = () => {
           <br />
           <TextField
             name="notes"
-            value={notes}
+            value={addNotes}
             onChange={handleInputChange}
             margin="dense"
             label="Notes"
@@ -58,7 +57,7 @@ const AddTaskForm = () => {
           <Button onClick={handleAddFormCancel} color="secondary" variant="outlined">
             Cancel
           </Button>
-          <Button onClick={handleAddFormAdd} color="primary" variant="outlined">
+          <Button onClick={handleAddTask} color="primary" variant="outlined">
             Add
           </Button>
         </DialogActions>
