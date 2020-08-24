@@ -11,8 +11,9 @@ import Archive from './pages/Archive'
 import Login from './pages/Login'
 import NavDrawer from './components/NavDrawer'
 import NavBar from './components/NavBar'
-import UserContext from './utils/UserContext'
 import DrawerContext from './utils/DrawerContext'
+import UserContext from './utils/UserContext'
+import AppContext from './utils/AppContext'
 import { checkGoogleAuth } from './utils/UserAuthApi'
 import TaskApi from './utils/TaskApi'
 
@@ -86,7 +87,7 @@ function App() {
     }
   }
 
-  // helper function
+  // helper function for handleDeleteTask and handleToggleArchived
   const removeTaskAndUpdate = async (list, _id, isArchived) => {
     let promise = new Promise((resolve, reject) => {
       // archived tasks have negative priority
@@ -125,7 +126,7 @@ function App() {
   }
 
   // changing task from isArchived to !isArchived
-  appState.handleToggleArchive = (_id, wasArchived) => event => {
+  appState.handleToggleArchived = (_id, wasArchived) => event => {
     // put task at end of new list
     // not using 0 as a priority
     const priority = wasArchived ? appState.taskList.length + 1 : -(appState.archiveList.length + 1)
@@ -206,46 +207,48 @@ function App() {
   return (
     <DrawerContext.Provider value={drawerState}>
       <UserContext.Provider value={userState}>
-        {isLoading
-          ? <div>LOADING...</div>
-          : (
-            <div>
-              <Router>
-                <div>
-                  {userState.isAuthenticated
-                    ? (
-                      <>
-                        <NavDrawer />
-                        <NavBar />
-                      </>
-                    )
-                    : null
-                  }
-                  <Switch>
-                    <Route path="/archive">
-                      {userState.isAuthenticated
-                        ? <Archive />
-                        : <Redirect to="/" />
-                      }
-                    </Route>
-                    <Route path="/home">
-                      {userState.isAuthenticated
-                        ? <Home />
-                        : <Redirect to="/" />
-                      }
-                    </Route>
-                    <Route exact path="/">
-                      {userState.isAuthenticated
-                        ? <Redirect to="/home" />
-                        : <Login />
-                      }
-                    </Route>
-                  </Switch>
-                </div>
-              </Router>
-            </div>
-          )
-        }
+        <AppContext.Provider value={appState}>
+          {isLoading
+            ? <div>LOADING...</div>
+            : (
+              <div>
+                <Router>
+                  <div>
+                    {userState.isAuthenticated
+                      ? (
+                        <>
+                          <NavDrawer />
+                          <NavBar />
+                        </>
+                      )
+                      : null
+                    }
+                    <Switch>
+                      <Route path="/archive">
+                        {userState.isAuthenticated
+                          ? <Archive />
+                          : <Redirect to="/" />
+                        }
+                      </Route>
+                      <Route path="/home">
+                        {userState.isAuthenticated
+                          ? <Home />
+                          : <Redirect to="/" />
+                        }
+                      </Route>
+                      <Route exact path="/">
+                        {userState.isAuthenticated
+                          ? <Redirect to="/home" />
+                          : <Login />
+                        }
+                      </Route>
+                    </Switch>
+                  </div>
+                </Router>
+              </div>
+            )
+          }
+        </AppContext.Provider>
       </UserContext.Provider>
     </DrawerContext.Provider>
   )
