@@ -1,8 +1,12 @@
 import React, { useContext } from 'react'
-import AccordionActions from '@material-ui/core/AccordionActions'
+import {
+  Button,
+  AccordionActions
+} from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import UnarchiveIcon from '@material-ui/icons/Unarchive'
+import DeleteTaskDialog from '../DeleteTaskDialog'
 import AppContext from '../../utils/AppContext'
 
 const TaskAccordionActions = props => {

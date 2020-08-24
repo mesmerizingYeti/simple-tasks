@@ -157,7 +157,7 @@ function App() {
     // udpate database first
     TaskApi.updateTask(_id, { isChecked: !wasChecked })
       .then(() => {
-        const updatedList = homeList.map(task => {
+        const updatedList = appState.homeList.map(task => {
           // only update task with _id
           if (task._id !== _id) return task
           return { ...task, isChecked: !wasChecked }

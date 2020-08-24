@@ -1,5 +1,4 @@
-import React, { useContext } from 'react'
-import { useHistory } from 'react-router-dom'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Grid,

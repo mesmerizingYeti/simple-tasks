@@ -16,17 +16,19 @@ const TaskDraggableList = props => {
       delayOnTouchStart={true}
       delay={2}
     >
-      {taskList.map((task, index) => {
-        return (
-          <div key={task._id}>
-            <TaskAccordion
-              index={index}
-              toggleChecked={handleToggleChecked}
-              {...task} 
-            />
-          </div>
-        )
-      })}
+      {(props.page === "home" ? homeList : archiveList)
+        .map((task, index) => {
+          return (
+            <div key={task._id}>
+              <TaskAccordion
+                index={index}
+                toggleChecked={handleToggleChecked}
+                {...task} 
+              />
+            </div>
+          )
+        })
+      }
     </ReactSortable>
   )
 }

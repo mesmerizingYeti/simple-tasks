@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   AppBar,
@@ -8,7 +7,6 @@ import {
   Typography
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
-import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import DrawerContext from '../../utils/DrawerContext'
 
 const useStyles = makeStyles(theme => ({

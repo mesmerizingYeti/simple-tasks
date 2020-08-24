@@ -1,15 +1,10 @@
 import React from 'react'
-import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import {
   Grid,
-  Typography,
-  Button,
   Paper,
-  Container
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import GoogleButton from 'react-google-button'
 
 import Logo from '../../components/Logo'
 import LoginForm from '../../components/LoginForm'
@@ -51,7 +46,6 @@ const Login = () => {
       <Paper className={classes.paper}>
         <Grid container justify="center" alignItems="center">
           <Logo className={classes.logo} />
-          {/* <Typography variant="h3" className={classes.title}>Simple Tasks</Typography> */}
         </Grid>
         <Grid container justify="center" alignItems="center">
           <Grid item xs={8}>
