@@ -51,6 +51,19 @@ module.exports = app => {
       .catch(err => console.log(err))
   })
 
+  // UPDATE MANY Tasks
+  app.put('/tasks/many', authCheck, (req, res) => {
+    req.data.forEach((taskData, index, array) => {
+      Task.updateOne({ _id: taskData._id }, taskData.value)
+        .then(() => {
+          if (index === array.length - 1) {
+            res.sendStatus(200)
+          }
+        })
+        .catch(err => console.log(err))
+    })
+  })
+
   // DELETE ONE Task
   app.delete('/tasks/:id', authCheck, (req, res) => {
     User.updateOne({ _id: req.user._id }, { $pull: { taskList: req.params.id }})

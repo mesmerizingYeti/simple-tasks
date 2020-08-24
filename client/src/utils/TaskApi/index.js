@@ -1,1 +1,1 @@
-export { default, getTask, getTasks, getUserTasks, createTask, updateTask, deleteTask } from './TaskApi'
+export { default, getTask, getTasks, getUserTasks, createTask, updateTask, updateTasks, deleteTask } from './TaskApi'

@@ -47,19 +47,19 @@ function App() {
   }
 
   appState.handleAddFormOpen = () => {
-    setHomeState({ ...homeState, addFormOpen: true })
+    setAppState({ ...appState, addFormOpen: true })
   }
 
   appState.handleAddFormCancel = () => {
-    setHomeState({ ...homeState, addTitle: "", addNotes: "", addFormOpen: false })
+    setAppState({ ...appState, addTitle: "", addNotes: "", addFormOpen: false })
   }
 
   appState.handleEditFormOpen = () => {
-    setHomeState({ ...homeState, editFormOpen: true })
+    setAppState({ ...appState, editFormOpen: true })
   }
 
   appState.handleEditFormCancel = () => {
-    setHomeState({ ...homeState, editTitle: "", editNotes: "", editFormOpen: false })
+    setAppState({ ...appState, editTitle: "", editNotes: "", editFormOpen: false })
   }
 
   appState.handleAddTask = () => {
@@ -79,36 +79,48 @@ function App() {
       }
       TaskApi.createTask(newTask)
         .then(task => {
-          let taskList = [...homeState.taskList, task]
-          setAppState({ ...homeState, taskList, addTitle: '', addNotes: '', addFormOpen: false })
+          let taskList = [...appState.taskList, task]
+          setAppState({ ...appState, taskList, addTitle: '', addNotes: '', addFormOpen: false })
         })
         .catch(err => console.error(err))
     }
   }
 
+  const updateAfterDelete = async (list, _id, isArchived) => {
+    let promise = new Promise((resolve, reject) => {
+      // archived tasks have negative priority
+      const sign = isArchived ? -1 : 1
+      let updatedList = list
+        // remove task from list
+        .filter(task => task._id !== _id)
+        // update priorities in list
+        .map((task, index) => ({ ...task, priority: sign * index }))
+      // update database
+      const dataList = updatedList.map(task => ({ _id: task._id, value: task.priority }))
+      TaskApi.updateTasks(dataList)
+        // return updated list if successful
+        .then(() => resolve(updatedList))
+        // else return error
+        .catch(err => reject(err))
+    })
+
+    return promise
+  }
+
   appState.handleDeleteTask = (_id, isArchived) => event => {
     TaskApi.deleteTask(_id)
-      .then(() => {
-        // if task was archived, remove from archiveList and update priorities for archiveList
+      .then(() => updateAfterDelete(
+        isArchived ? appState.archiveList : appState.taskList,
+        _id,
+        isArchived
+      ))
+      .then(updatedList => {
+        // update correct list in appState
         if (isArchived) {
-          let archiveList = homepage.archiveList
-            // remove task
-            .filter(task => task._id !== _id)
-            // update priorities (archived tasks have negative priority)
-            .map((task, index) => ({ ...task, priority: -index }))
-          console.log(archiveList)
+          setAppState({ ...appState, archiveList: updatedList })
         } else {
-          // else, remove from taskList and update priorities for taskList
-          let taskList = homepage.taskList
-            // remove task
-            .filter(task => task._id !== _id)
-            // update priorities
-            .map((task, index) => ({ ...task, priority: index }))
-          // update database priorities
-          
+          setAppState({ ...appState, taskList: updatedList })
         }
-        let taskList = appState.taskList.filter(task => task._id !== _id)
-        setAppState({ ...appState, taskList })
       })
       .catch(err => console.error(err))
   }
