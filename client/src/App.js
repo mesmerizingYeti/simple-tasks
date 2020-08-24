@@ -33,7 +33,7 @@ function App() {
 
   // app data and functions
   const [appState, setAppState] = useState({
-    taskList: [],
+    homeList: [],
     archiveList: [],
     addTitle: '',
     addNotes: '',
@@ -76,12 +76,12 @@ function App() {
         // do not want to use 0 for priority
         // positive numbers are unarchived
         // negative numbers are archived
-        priority: appState.taskList.length + 1
+        priority: appState.homeList.length + 1
       }
       TaskApi.createTask(newTask)
         .then(task => {
-          let taskList = [...appState.taskList, task]
-          setAppState({ ...appState, taskList, addTitle: '', addNotes: '', addFormOpen: false })
+          let homeList = [...appState.homeList, task]
+          setAppState({ ...appState, homeList, addTitle: '', addNotes: '', addFormOpen: false })
         })
         .catch(err => console.error(err))
     }
@@ -111,7 +111,7 @@ function App() {
   }
 
   appState.handleDeleteTask = (_id, isArchived) => event => {
-    const list = isArchived ? appState.archiveList : appState.taskList
+    const list = isArchived ? appState.archiveList : appState.homeList
     TaskApi.deleteTask(_id)
       .then(() => removeTaskAndUpdate(list, _id, isArchived))
       .then(updatedList => {
@@ -119,7 +119,7 @@ function App() {
         if (isArchived) {
           setAppState({ ...appState, archiveList: updatedList })
         } else {
-          setAppState({ ...appState, taskList: updatedList })
+          setAppState({ ...appState, homeList: updatedList })
         }
       })
       .catch(err => console.error(err))
@@ -129,11 +129,11 @@ function App() {
   appState.handleToggleArchived = (_id, wasArchived) => event => {
     // put task at end of new list
     // not using 0 as a priority
-    const priority = wasArchived ? appState.taskList.length + 1 : -(appState.archiveList.length + 1)
+    const priority = wasArchived ? appState.homeList.length + 1 : -(appState.archiveList.length + 1)
     TaskApi.updateTask(_id, { isArchived: !wasArchived, priority })
       .then(() => {
-        let newList = wasArchived ? appState.taskList : appState.archiveList
-        let oldList = wasArchived ? appState.archiveList : appState.taskList
+        let newList = wasArchived ? appState.homeList : appState.archiveList
+        let oldList = wasArchived ? appState.archiveList : appState.homeList
         // grab task and add to new list
         const task = oldList.find(task => task._id === _id)
         newList.push(task)
@@ -143,7 +143,7 @@ function App() {
             if (wasArchived) {
               setAppState({ ...appState, archiveList: updatedList })
             } else {
-              setAppState({ ...appState, taskList: updatedList })
+              setAppState({ ...appState, homeList: updatedList })
             }
           })
           .catch(err => console.error(err))
@@ -152,18 +152,18 @@ function App() {
   }
 
   // changing task from isChecked to !isChecked
-  // only tasks in taskList can have checked be toggled
+  // only tasks in homeList can have checked be toggled
   appState.handleToggleChecked = (_id, wasChecked) => event => {
     // udpate database first
     TaskApi.updateTask(_id, { isChecked: !wasChecked })
       .then(() => {
-        const updatedList = taskList.map(task => {
+        const updatedList = homeList.map(task => {
           // only update task with _id
           if (task._id !== _id) return task
           return { ...task, isChecked: !wasChecked }
         })
         // update appState
-        setAppState({ ...appState, taskList: updatedList })
+        setAppState({ ...appState, homeList: updatedList })
       })
       .catch(err => console.error(err))
   }
@@ -192,6 +192,10 @@ function App() {
           TaskApi.getUserTasks()
             .then(({ data: taskList }) => {
               setUserState({ ...userState, isAuthenticated, _id, googleId, email, name, taskList })
+              // set up homeList and archiveList in appState
+              const homeList = taskList.filter(task => !task.isArchived)
+              const archiveList = taskList.filter(task => task.isArchived)
+              setAppState({ ...appState, homeList, archiveList })
               // finished loading user data
               setIsLoading(false)
             })

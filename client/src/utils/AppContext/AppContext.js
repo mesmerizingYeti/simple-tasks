@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 
 const AppContext = createContext({
-  taskList: [],
+  homeList: [],
   archiveList: [],
   addTitle: '',
   addNotes: '',
@@ -16,8 +16,8 @@ const AppContext = createContext({
   handleEditFormCancel: () => {},
   handleAddTask: () => {},
   handleDeleteTask: () => {},
-  handleToggleArchive: () => {},
-  handleToggleCheck: () => {},
+  handleToggleArchived: () => {},
+  handleToggleChecked: () => {},
 })
 
 export default AppContext

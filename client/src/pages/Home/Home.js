@@ -44,7 +44,7 @@ const itemList = [{
 }]
 
 const Home = () => {
-  const { taskList } = useContext(AppContext)
+  const { homeList } = useContext(AppContext)
 
   return (
     <div>
@@ -52,7 +52,7 @@ const Home = () => {
       <br />
       <AddTaskForm />
       <br />
-      {taskList.length === 0
+      {homeList.length === 0
         ? <NoTasks page="home" />
         : <TaskDraggableList />
       }

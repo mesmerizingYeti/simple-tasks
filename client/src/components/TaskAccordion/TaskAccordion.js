@@ -1,23 +1,18 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import {
   Grid,
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  AccordionActions,
   FormControlLabel,
   Checkbox,
   Divider,
-  Typography,
-  Button
+  Typography
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
-import EditIcon from '@material-ui/icons/Edit'
-import ArchiveIcon from '@material-ui/icons/Archive'
 import { makeStyles } from '@material-ui/core/styles'
-import DeleteTaskDialog from '../DeleteTaskDialog'
-import HomeContext from '../../utils/HomeContext'
+import TaskAccordionActions from '../../components/TaskAccordionActions'
 
 const useStyles = makeStyles({
   taskAccordion: {
@@ -42,7 +37,6 @@ const useStyles = makeStyles({
 
 const TaskAccordion = props => {
   const classes = useStyles()
-  const { handleArchiveTask } = useContext(HomeContext)
 
   return (
     <div className={classes.taskAccordion}>
@@ -88,46 +82,7 @@ const TaskAccordion = props => {
                 {props.notes}
               </Typography>
             </AccordionDetails>
-            <AccordionActions>
-              {props.isArchived
-                ? (
-                  <>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      startIcon={<ArchiveIcon />}
-                      onClick={handleUnarchiveTask(props._id)}
-                    >
-                      Unarchive
-                    </Button>
-                  </>
-                )
-                : (
-                  <>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      color="primary"
-                      startIcon={<EditIcon />}
-                      onClick={() => {
-                        // Add edit task dialog
-                      }}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      startIcon={<ArchiveIcon />}
-                      onClick={handleArchiveTask(props._id)}
-                    >
-                      Archive
-                    </Button>
-                  </>
-                )
-              }
-              <DeleteTaskDialog title={"Delete " + props.title} _id={props._id} />
-            </AccordionActions>
+            <TaskAccordionActions {...props} />
           </Accordion>
         </Grid>
       </Grid>
