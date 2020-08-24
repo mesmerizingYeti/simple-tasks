@@ -67,45 +67,45 @@ const Home = () => {
     setHomeState({ ...homeState, taskList })
   }
 
-  homeState.setTaskList = taskList => {
-    setHomeState({ ...homeState, taskList })
-  }
+  // homeState.setTaskList = taskList => {
+  //   setHomeState({ ...homeState, taskList })
+  // }
 
-  homeState.handleInputChange = event => {
-    setHomeState({ ...homeState, [event.target.name]: event.target.value })
-  }
+  // homeState.handleInputChange = event => {
+  //   setHomeState({ ...homeState, [event.target.name]: event.target.value })
+  // }
 
-  homeState.handleAddFormOpen = event => {
-    setHomeState({ ...homeState, addFormOpen: true })
-  }
+  // homeState.handleAddFormOpen = event => {
+  //   setHomeState({ ...homeState, addFormOpen: true })
+  // }
 
-  homeState.handleAddFormCancel = event => {
-    setHomeState({ ...homeState, title: '', notes: '', addFormOpen: false })
-  }
+  // homeState.handleAddFormCancel = event => {
+  //   setHomeState({ ...homeState, title: '', notes: '', addFormOpen: false })
+  // }
 
-  homeState.handleAddFormAdd = event => {
-    // make sure user entered title for task
-    if (homeState.title !== "") {
-      // create new task
-      let newTask = {
-        user: userId,
-        title: homeState.title,
-        notes: homeState.notes,
-        isChecked: false,
-        isArchived: false,
-        // do not want to use 0 for priority
-        // positive numbers are unarchived
-        // negative numbers are archived
-        priority: homeState.taskList.length + 1
-      }
-      TaskApi.createTask(newTask)
-        .then(task => {
-          let taskList = [...homeState.taskList, newTask]
-          setHomeState({ ...homeState, taskList, title: '', notes: '', addFormOpen: false })
-        })
-        .catch(err => console.error(err))
-    }
-  }
+  // homeState.handleAddFormAdd = event => {
+  //   // make sure user entered title for task
+  //   if (homeState.title !== "") {
+  //     // create new task
+  //     let newTask = {
+  //       user: userId,
+  //       title: homeState.title,
+  //       notes: homeState.notes,
+  //       isChecked: false,
+  //       isArchived: false,
+  //       // do not want to use 0 for priority
+  //       // positive numbers are unarchived
+  //       // negative numbers are archived
+  //       priority: homeState.taskList.length + 1
+  //     }
+  //     TaskApi.createTask(newTask)
+  //       .then(task => {
+  //         let taskList = [...homeState.taskList, newTask]
+  //         setHomeState({ ...homeState, taskList, title: '', notes: '', addFormOpen: false })
+  //       })
+  //       .catch(err => console.error(err))
+  //   }
+  // }
 
   homeState.handleDeleteTask = _id => event => {
     TaskApi.deleteTask(_id)

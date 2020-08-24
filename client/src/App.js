@@ -30,6 +30,89 @@ function App() {
     isAuthenticated: false
   })
 
+  // app data and functions
+  const [appState, setAppState] = useState({
+    taskList: [],
+    archiveList: [],
+    addTitle: '',
+    addNotes: '',
+    addFormOpen: false,
+    editTitle: '',
+    editNotes: '',
+    editFormOpen: false
+  })
+
+  appState.handleInputChange = event => {
+    setAppState({ ...appState, [event.target.name]: event.target.value })
+  }
+
+  appState.handleAddFormOpen = () => {
+    setHomeState({ ...homeState, addFormOpen: true })
+  }
+
+  appState.handleAddFormCancel = () => {
+    setHomeState({ ...homeState, addTitle: "", addNotes: "", addFormOpen: false })
+  }
+
+  appState.handleEditFormOpen = () => {
+    setHomeState({ ...homeState, editFormOpen: true })
+  }
+
+  appState.handleEditFormCancel = () => {
+    setHomeState({ ...homeState, editTitle: "", editNotes: "", editFormOpen: false })
+  }
+
+  appState.handleAddTask = () => {
+    // make sure user entered title for task
+    if (appState.addTitle !== "") {
+      // create new task
+      let newTask = {
+        user: userId,
+        title: appState.addTitle,
+        notes: appState.addNotes,
+        isChecked: false,
+        isArchived: false,
+        // do not want to use 0 for priority
+        // positive numbers are unarchived
+        // negative numbers are archived
+        priority: appState.taskList.length + 1
+      }
+      TaskApi.createTask(newTask)
+        .then(task => {
+          let taskList = [...homeState.taskList, task]
+          setAppState({ ...homeState, taskList, addTitle: '', addNotes: '', addFormOpen: false })
+        })
+        .catch(err => console.error(err))
+    }
+  }
+
+  appState.handleDeleteTask = (_id, isArchived) => event => {
+    TaskApi.deleteTask(_id)
+      .then(() => {
+        // if task was archived, remove from archiveList and update priorities for archiveList
+        if (isArchived) {
+          let archiveList = homepage.archiveList
+            // remove task
+            .filter(task => task._id !== _id)
+            // update priorities (archived tasks have negative priority)
+            .map((task, index) => ({ ...task, priority: -index }))
+          console.log(archiveList)
+        } else {
+          // else, remove from taskList and update priorities for taskList
+          let taskList = homepage.taskList
+            // remove task
+            .filter(task => task._id !== _id)
+            // update priorities
+            .map((task, index) => ({ ...task, priority: index }))
+          // update database priorities
+          
+        }
+        let taskList = appState.taskList.filter(task => task._id !== _id)
+        setAppState({ ...appState, taskList })
+      })
+      .catch(err => console.error(err))
+  }
+
   // control NavDrawer
   const [drawerState, setDrawerState] = useState({
     isOpen: false
