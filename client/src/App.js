@@ -62,7 +62,7 @@ function App() {
     setAppState({ ...appState, editTitle: "", editNotes: "", editFormOpen: false })
   }
 
-  appState.handleAddTask = () => {
+  appState.handleAddTask = event => {
     // make sure user entered title for task
     if (appState.addTitle !== "") {
       // create new task
@@ -86,7 +86,8 @@ function App() {
     }
   }
 
-  const updateAfterDelete = async (list, _id, isArchived) => {
+  // helper function
+  const removeTaskAndUpdate = async (list, _id, isArchived) => {
     let promise = new Promise((resolve, reject) => {
       // archived tasks have negative priority
       const sign = isArchived ? -1 : 1
@@ -94,9 +95,10 @@ function App() {
         // remove task from list
         .filter(task => task._id !== _id)
         // update priorities in list
-        .map((task, index) => ({ ...task, priority: sign * index }))
+        // not using 0 as a priority
+        .map((task, index) => ({ ...task, priority: sign * (index + 1) }))
       // update database
-      const dataList = updatedList.map(task => ({ _id: task._id, value: task.priority }))
+      const dataList = updatedList.map(task => ({ _id: task._id, value: { priority: task.priority} }))
       TaskApi.updateTasks(dataList)
         // return updated list if successful
         .then(() => resolve(updatedList))
@@ -108,12 +110,9 @@ function App() {
   }
 
   appState.handleDeleteTask = (_id, isArchived) => event => {
+    const list = isArchived ? appState.archiveList : appState.taskList
     TaskApi.deleteTask(_id)
-      .then(() => updateAfterDelete(
-        isArchived ? appState.archiveList : appState.taskList,
-        _id,
-        isArchived
-      ))
+      .then(() => removeTaskAndUpdate(list, _id, isArchived))
       .then(updatedList => {
         // update correct list in appState
         if (isArchived) {
@@ -121,6 +120,49 @@ function App() {
         } else {
           setAppState({ ...appState, taskList: updatedList })
         }
+      })
+      .catch(err => console.error(err))
+  }
+
+  // changing task from isArchived to !isArchived
+  appState.handleToggleArchive = (_id, wasArchived) => event => {
+    // put task at end of new list
+    // not using 0 as a priority
+    const priority = wasArchived ? appState.taskList.length + 1 : -(appState.archiveList.length + 1)
+    TaskApi.updateTask(_id, { isArchived: !wasArchived, priority })
+      .then(() => {
+        let newList = wasArchived ? appState.taskList : appState.archiveList
+        let oldList = wasArchived ? appState.archiveList : appState.taskList
+        // grab task and add to new list
+        const task = oldList.find(task => task._id === _id)
+        newList.push(task)
+        removeTaskAndUpdate(oldList, _id, wasArchived)
+          .then(updatedList => {
+            // update correct list in appState
+            if (wasArchived) {
+              setAppState({ ...appState, archiveList: updatedList })
+            } else {
+              setAppState({ ...appState, taskList: updatedList })
+            }
+          })
+          .catch(err => console.error(err))
+      })
+      .catch(err => console.error(err))
+  }
+
+  // changing task from isChecked to !isChecked
+  // only tasks in taskList can have checked be toggled
+  appState.handleToggleChecked = (_id, wasChecked) => event => {
+    // udpate database first
+    TaskApi.updateTask(_id, { isChecked: !wasChecked })
+      .then(() => {
+        const updatedList = taskList.map(task => {
+          // only update task with _id
+          if (task._id !== _id) return task
+          return { ...task, isChecked: !wasChecked }
+        })
+        // update appState
+        setAppState({ ...appState, taskList: updatedList })
       })
       .catch(err => console.error(err))
   }
