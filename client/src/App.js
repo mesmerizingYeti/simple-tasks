@@ -55,8 +55,8 @@ function App() {
     setAppState({ ...appState, addTitle: "", addNotes: "", addFormOpen: false })
   }
 
-  appState.handleEditFormOpen = () => {
-    setAppState({ ...appState, editFormOpen: true })
+  appState.handleEditFormOpen = (editTitle, editNotes) => event => {
+    setAppState({ ...appState, editTitle, editNotes, editFormOpen: true })
   }
 
   appState.handleEditFormCancel = () => {
@@ -85,6 +85,25 @@ function App() {
         })
         .catch(err => console.error(err))
     }
+  }
+
+  appState.handleUpdateTask = _id => event => {
+    console.log('about to update task on database')
+    // update task on database
+    TaskApi.updateTask({ _id, title: appState.editTitle, notes: appState.editNotes })
+      .then(() => {
+        console.log('about to update task locally')
+        // update task locally
+        let homeList = appState.homeList.map(task => {
+          if (task._id === _id) {
+            return { ...task, title: appState.editTitle, notes: appState.editNotes }
+          }
+          return task
+        })
+        console.log('updating appState')
+        setAppState({ ...appState, homeList, editTitle: '', editNotes: '', editFormOpen: false })
+      })
+      .catch(err => console.error(err))
   }
 
   // helper function for handleDeleteTask and handleToggleArchived

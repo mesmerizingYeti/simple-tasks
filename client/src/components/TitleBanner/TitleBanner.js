@@ -17,7 +17,7 @@ const TitleBanner = props => {
   const classes = useStyles()
 
   return (
-    <Paper fullWidth className={classes.titlePaper}>
+    <Paper className={classes.titlePaper}>
       <Typography variant="h3">{props.title}</Typography>
     </Paper>
   )

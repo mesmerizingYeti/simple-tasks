@@ -15,6 +15,7 @@ const AppContext = createContext({
   handleEditFormOpen: () => {},
   handleEditFormCancel: () => {},
   handleAddTask: () => {},
+  handleUpdateTask: () => {},
   handleDeleteTask: () => {},
   handleToggleArchived: () => {},
   handleToggleChecked: () => {},
