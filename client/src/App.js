@@ -79,8 +79,10 @@ function App() {
         priority: appState.homeList.length + 1
       }
       TaskApi.createTask(newTask)
-        .then(task => {
+        .then(({ data: task }) => {
           let homeList = [...appState.homeList, task]
+          console.log(task)
+          console.log(homeList)
           setAppState({ ...appState, homeList, addTitle: '', addNotes: '', addFormOpen: false })
         })
         .catch(err => console.error(err))

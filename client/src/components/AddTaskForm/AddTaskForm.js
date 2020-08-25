@@ -32,7 +32,7 @@ const AddTaskForm = () => {
           </DialogContentText>
           <TextField
             autoFocus
-            name="title"
+            name="addTitle"
             value={addTitle}
             onChange={handleInputChange}
             margin="dense"
@@ -42,7 +42,7 @@ const AddTaskForm = () => {
             />
           <br />
           <TextField
-            name="notes"
+            name="addNotes"
             value={addNotes}
             onChange={handleInputChange}
             margin="dense"
