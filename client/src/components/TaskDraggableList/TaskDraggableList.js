@@ -11,7 +11,7 @@ const TaskDraggableList = props => {
     <ReactSortable 
       list={props.page === "home" ? homeList : archiveList} 
       setList={props.page === "home" ? setHomeList : setArchiveList}
-      handle='.makeStyles-taskAccordionHandle-9'
+      handle='.draggableHandle'
       animation={150}
       delayOnTouchStart={true}
       delay={2}

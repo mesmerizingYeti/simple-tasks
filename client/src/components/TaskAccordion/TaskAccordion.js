@@ -49,7 +49,7 @@ const TaskAccordion = props => {
         <Grid item xs={1}>
           <Grid container alignItems="center" justify="center">
             <Grid item>
-              <UnfoldMoreIcon className={classes.taskAccordionHandle} />
+              <UnfoldMoreIcon className={classes.taskAccordionHandle + " draggableHandle"} />
             </Grid>
           </Grid>
         </Grid>

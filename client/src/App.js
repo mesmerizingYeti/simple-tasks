@@ -39,7 +39,9 @@ function App() {
     addNotes: '',
     addFormOpen: false,
     editTitle: '',
+    editOriginalTitle: '',
     editNotes: '',
+    editId: 0,
     editFormOpen: false
   })
 
@@ -55,12 +57,19 @@ function App() {
     setAppState({ ...appState, addTitle: "", addNotes: "", addFormOpen: false })
   }
 
-  appState.handleEditFormOpen = (editTitle, editNotes) => event => {
-    setAppState({ ...appState, editTitle, editNotes, editFormOpen: true })
+  appState.handleEditFormOpen = (editTitle, editNotes, editId) => event => {
+    setAppState({ 
+      ...appState, 
+      editTitle, 
+      editOriginalTitle: editTitle, 
+      editNotes, 
+      editId, 
+      editFormOpen: true 
+    })
   }
 
   appState.handleEditFormCancel = () => {
-    setAppState({ ...appState, editTitle: "", editNotes: "", editFormOpen: false })
+    setAppState({ ...appState, editTitle: "", editOriginalTitle: "", editNotes: "", editFormOpen: false })
   }
 
   appState.handleAddTask = event => {
@@ -87,21 +96,18 @@ function App() {
     }
   }
 
-  appState.handleUpdateTask = _id => event => {
-    console.log('about to update task on database')
+  appState.handleUpdateTask = event => {
     // update task on database
-    TaskApi.updateTask({ _id, title: appState.editTitle, notes: appState.editNotes })
+    TaskApi.updateTask({ _id: appState.editId, title: appState.editTitle, notes: appState.editNotes })
       .then(() => {
-        console.log('about to update task locally')
         // update task locally
         let homeList = appState.homeList.map(task => {
-          if (task._id === _id) {
+          if (task._id === appState.editId) {
             return { ...task, title: appState.editTitle, notes: appState.editNotes }
           }
           return task
         })
-        console.log('updating appState')
-        setAppState({ ...appState, homeList, editTitle: '', editNotes: '', editFormOpen: false })
+        setAppState({ ...appState, homeList, editTitle: '', editOriginalTitle: '', editNotes: '', editFormOpen: false })
       })
       .catch(err => console.error(err))
   }

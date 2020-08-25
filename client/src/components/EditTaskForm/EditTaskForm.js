@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import {
   Button,
   TextField,
@@ -14,6 +14,7 @@ import AppContext from '../../utils/AppContext'
 const EditTaskForm = props => {
   const { 
     editTitle, 
+    editOriginalTitle, 
     editNotes, 
     editFormOpen, 
     handleInputChange, 
@@ -28,14 +29,14 @@ const EditTaskForm = props => {
         size="small"
         variant="contained"
         color="primary"
-        onClick={handleEditFormOpen(props.title, props.notes)}
+        onClick={handleEditFormOpen(props.title, props.notes, props._id)}
         startIcon={<EditIcon />}
       >
         Edit Task
       </Button>
       <Dialog open={editFormOpen} onClose={handleEditFormCancel} aria-labelledby="edit-form-task-title">
         <DialogTitle id="edit-form-task-title">
-          {`Edit ${props.title}`}
+          {`Edit ${editOriginalTitle}`}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -68,7 +69,7 @@ const EditTaskForm = props => {
           <Button onClick={handleEditFormCancel} color="secondary" variant="outlined">
             Cancel
           </Button>
-          <Button onClick={handleUpdateTask(props._id)} color="primary" variant="outlined">
+          <Button onClick={handleUpdateTask} color="primary" variant="outlined">
             Save
           </Button>
         </DialogActions>
