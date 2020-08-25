@@ -127,18 +127,29 @@ function App() {
 
   // changing task from isArchived to !isArchived
   appState.handleToggleArchived = (_id, wasArchived) => event => {
+    console.log('in handleToggleArchived')
     // put task at end of new list
     // not using 0 as a priority
     const priority = wasArchived ? appState.homeList.length + 1 : -(appState.archiveList.length + 1)
-    TaskApi.updateTask(_id, { isArchived: !wasArchived, priority })
+    console.log(`about to update task ${_id} to isArchived = ${!wasArchived}`)
+    TaskApi.updateTask({ _id, isArchived: !wasArchived, priority })
       .then(() => {
+        console.log('updated task')
         let newList = wasArchived ? appState.homeList : appState.archiveList
+        console.log('newList')
+        console.log(newList)
         let oldList = wasArchived ? appState.archiveList : appState.homeList
+        console.log('oldList')
+        console.log(oldList)
         // grab task and add to new list
+        console.log('adding task to newList')
         const task = oldList.find(task => task._id === _id)
         newList.push(task)
+        console.log('removing task and updating')
         removeTaskAndUpdate(oldList, _id, wasArchived)
           .then(updatedList => {
+            console.log('updatedList')
+            console.log(updatedList)
             // update correct list in appState
             if (wasArchived) {
               setAppState({ ...appState, archiveList: updatedList })
@@ -202,8 +213,8 @@ function App() {
             .then(({ data: taskList }) => {
               setUserState({ ...userState, isAuthenticated, _id, googleId, email, name, taskList })
               // set up homeList and archiveList in appState
-              const homeList = taskList.filter(task => !task.isArchived)
-              const archiveList = taskList.filter(task => task.isArchived)
+              const homeList = taskList.filter(task => !task.isArchived).sort((a, b) => a.priority - b.priority)
+              const archiveList = taskList.filter(task => task.isArchived).sort((a, b) => b.priority - a.priority)
               setAppState({ ...appState, homeList, archiveList })
               // finished loading user data
               setIsLoading(false)
