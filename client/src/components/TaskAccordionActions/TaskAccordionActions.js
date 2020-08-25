@@ -10,7 +10,7 @@ import DeleteTaskDialog from '../DeleteTaskDialog'
 import AppContext from '../../utils/AppContext'
 
 const TaskAccordionActions = props => {
-  const { handleToggleArchived , handleDeleteTask } = useContext(AppContext)
+  const { handleToggleArchived } = useContext(AppContext)
 
   return (
     <AccordionActions>
@@ -39,7 +39,7 @@ const TaskAccordionActions = props => {
       <DeleteTaskDialog 
         title={"Delete " + props.title} 
         _id={props._id} 
-        handleDeleteTask={handleDeleteTask(props._id, props.isArchived)} 
+        idArchived={props.isArchived}
       />
     </AccordionActions>
   )

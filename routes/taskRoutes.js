@@ -53,7 +53,7 @@ module.exports = app => {
 
   // UPDATE MANY Tasks
   app.put('/tasks/many', authCheck, (req, res) => {
-    req.data.forEach((taskData, index, array) => {
+    req.body.forEach((taskData, index, array) => {
       Task.updateOne({ _id: taskData._id }, taskData.value)
         .then(() => {
           if (index === array.length - 1) {

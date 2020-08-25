@@ -81,8 +81,6 @@ function App() {
       TaskApi.createTask(newTask)
         .then(({ data: task }) => {
           let homeList = [...appState.homeList, task]
-          console.log(task)
-          console.log(homeList)
           setAppState({ ...appState, homeList, addTitle: '', addNotes: '', addFormOpen: false })
         })
         .catch(err => console.error(err))
