@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const checkGoogleAuth =() => 
-  axios.get('http://localhost:3001/auth/authenicated', {
+  axios.get('/auth/authenicated', {
     withCredentials: true,
     headers: {
       "Accept": "application/json",
