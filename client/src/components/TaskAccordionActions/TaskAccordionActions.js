@@ -22,9 +22,7 @@ const TaskAccordionActions = props => {
         size="small"
         variant="contained"
         startIcon={props.isArchived ? <UnarchiveIcon /> : <ArchiveIcon />}
-        onClick={() => {
-          handleToggleArchived(props._id, props.isArchived)
-        }}
+        onClick={handleToggleArchived(props._id, props.isArchived)}
       >
         Archive
       </Button>

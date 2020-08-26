@@ -23,7 +23,10 @@ const TaskDraggableList = props => {
       delayOnTouchStart={true}
       delay={2}
       onEnd={() => 
-        updateDatabase(props.page === "home" ? homeList : archiveList)
+        updateDatabase(
+          props.page === "home" ? homeList : archiveList, 
+          props.page === "home" ? false : true
+        )
           .then(() => console.log('Updated database successfully'))
           .catch(err => console.error(err))
       }
