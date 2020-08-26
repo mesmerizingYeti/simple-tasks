@@ -11,7 +11,8 @@ const HomeContext = createContext({
   handleAddFormOpen: () => {},
   handleAddFormCancel: () => {},
   handleAddFormAdd: () => {},
-  handleDeleteTask: () => {}
+  handleDeleteTask: () => {},
+  handleArchiveTask: () => {},
 })
 
 export default HomeContext

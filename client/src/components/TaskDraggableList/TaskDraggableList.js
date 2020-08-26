@@ -1,31 +1,49 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { ReactSortable } from 'react-sortablejs'
 import TaskAccordion from '../TaskAccordion'
-import HomeContext from '../../utils/HomeContext'
+import AppContext from '../../utils/AppContext'
 
-const TaskDraggableList = () => {
-  const { taskList, handleTaskCheck, setTaskList } = useContext(HomeContext)
+
+const TaskDraggableList = props => {
+  const { 
+    homeList, 
+    archiveList, 
+    handleToggleChecked, 
+    updateDatabase,
+    setHomeList, 
+    setArchiveList 
+  } = useContext(AppContext)
 
   return (
     <ReactSortable 
-      list={taskList} 
-      setList={setTaskList}
-      handle='.makeStyles-handle-2'
+      list={props.page === "home" ? homeList : archiveList} 
+      setList={props.page === "home" ? setHomeList : setArchiveList}
+      handle='.draggableHandle'
       animation={150}
       delayOnTouchStart={true}
       delay={2}
-    >
-      {taskList.map((task, index) => {
-        return (
-          <div key={task.id}>
-            <TaskAccordion
-              index={index}
-              setChecked={handleTaskCheck}
-              {...task} 
-            />
-          </div>
+      onEnd={() => 
+        updateDatabase(
+          props.page === "home" ? homeList : archiveList, 
+          props.page === "home" ? false : true
         )
-      })}
+          .then(() => console.log('Updated database successfully'))
+          .catch(err => console.error(err))
+      }
+    >
+      {(props.page === "home" ? homeList : archiveList)
+        .map((task, index) => {
+          return (
+            <div key={task._id}>
+              <TaskAccordion
+                index={index}
+                toggleChecked={handleToggleChecked}
+                {...task} 
+              />
+            </div>
+          )
+        })
+      }
     </ReactSortable>
   )
 }

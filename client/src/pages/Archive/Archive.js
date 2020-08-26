@@ -1,10 +1,20 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography'
+import React, { useContext } from 'react'
+import TitleBanner from '../../components/TitleBanner'
+import TaskDraggableList from '../../components/TaskDraggableList'
+import NoTasks from '../../components/NoTasks'
+import AppContext from '../../utils/AppContext'
 
 const Archive = () => {
+  const { archiveList } = useContext(AppContext)
+
   return (
     <div>
-      <Typography variant="h3">Archive Page</Typography>
+      <TitleBanner title="Archive Page" />
+      <br />
+      {archiveList.length === 0
+        ? <NoTasks page="archive" />
+        : <TaskDraggableList page="archive" />
+      }
     </div>
   )
 }

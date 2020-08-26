@@ -1,93 +1,61 @@
-import React, { useState, useContext } from 'react'
-import Typography from '@material-ui/core/Typography'
+import React, { useContext } from 'react'
+import TitleBanner from '../../components/TitleBanner'
 import AddTaskForm from '../../components/AddTaskForm'
 import TaskDraggableList from '../../components/TaskDraggableList'
-import HomeContext from '../../utils/HomeContext'
-import UserContext from '../../utils/UserContext'
+import NoTasks from '../../components/NoTasks'
+import AppContext from '../../utils/AppContext'
 
 // Temporary task list for development purposes
 const itemList = [{
-  title: 'Item 1', 
-  id: '1',
+  title: 'Item 1',
+  _id: '1',
   notes: 'Notes for the first item.',
   isChecked: false,
-  isArchived: false
+  isArchived: false,
+  priority: 3
 }, {
-  title: 'Item 2', 
-  id: '22',
+  title: 'Item 2',
+  _id: '22',
   notes: 'Notes for the second item.',
   isChecked: false,
-  isArchived: false
+  isArchived: false,
+  priority: 2
 }, {
-  title: 'Item 3', 
-  id: '333',
+  title: 'Item 3',
+  _id: '333',
   notes: 'Notes for the third item.',
   isChecked: true,
-  isArchived: false
+  isArchived: false,
+  priority: 1
 }, {
-  title: 'Item 4', 
-  id: '4444',
+  title: 'Item 4',
+  _id: '4444',
   notes: 'Notes for the fourth item.',
   isChecked: false,
-  isArchived: false
+  isArchived: false,
+  priority: 4
+}, {
+  title: 'Item 5',
+  _id: "55555",
+  notes: "Don't mess with me!",
+  isChecked: true,
+  isArchived: true,
+  priority: -1
 }]
 
 const Home = () => {
-  const { email, _id, jwt } = useContext(UserContext)
-  const [homeState, setHomeState] = useState({
-    taskList: itemList,
-    title: '',
-    notes: '',
-    addFormOpen: false
-  })
-
-  homeState.handleTaskCheck = (index, setValue) => event => {
-    event.stopPropagation()
-    let taskList = [...homeState.taskList]
-    taskList[index].isChecked = setValue
-    setHomeState({ ...homeState, taskList })
-  }
-
-  homeState.setTaskList = taskList => {
-    setHomeState({ ...homeState, taskList })
-  }
-
-  homeState.handleInputChange = event => {
-    setHomeState({ ...homeState, [event.target.name]: event.target.value })
-  }
-
-  homeState.handleAddFormOpen = event => {
-    setHomeState({ ...homeState, addFormOpen: true })
-  }
-
-  homeState.handleAddFormCancel = event => {
-    setHomeState({ ...homeState, title: '', notes: '', addFormOpen: false})
-  }
-
-  homeState.handleAddFormAdd = event => {
-    let newTask = { 
-      title: homeState.title, 
-      notes: homeState.notes, 
-      id: homeState.title,
-      isChecked: false,
-      isArchived: false 
-    }
-    let taskList = [...homeState.taskList, newTask]
-    setHomeState({ ...homeState, taskList, title: '', notes: '', addFormOpen: false })
-  }
-
-  homeState.handleDeleteTask = id => event => {
-    let taskList = homeState.taskList.filter(task => task.id !== id)
-    setHomeState({ ...homeState, taskList })
-  }
+  const { homeList } = useContext(AppContext)
 
   return (
     <div>
-      <HomeContext.Provider value={homeState}>
-        <Typography variant="h3">Home Page</Typography>
-        <AddTaskForm />
-        <TaskDraggableList />
-      </HomeContext.Provider>
+      <TitleBanner title="Home Page" />
+      <br />
+      <AddTaskForm />
+      <br />
+      {homeList.length === 0
+        ? <NoTasks page="home" />
+        : <TaskDraggableList page="home" />
+      }
     </div>
   )
 }

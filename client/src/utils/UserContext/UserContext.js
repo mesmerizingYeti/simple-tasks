@@ -1,11 +1,12 @@
 import { createContext } from 'react'
 
 const UserContext = createContext({
+  _id: 0,
+  googleId: '',
   email: '',
-  _id: '',
-  jwt: '',
-  isGoogle: false,
-  handleCreateUser: () => {}
+  name: '',
+  taskList: [],
+  isAuthenticated: false
 })
 
 export default UserContext

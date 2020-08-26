@@ -8,11 +8,12 @@ import {
   DialogTitle
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
-import HomeContext from '../../utils/HomeContext'
+import AppContext from '../../utils/AppContext'
 
 const DeleteTaskDialog = props => {
+  const { handleDeleteTask } = useContext(AppContext)
+
   const [open, setOpen] = useState(false)
-  const { handleDeleteTask } = useContext(HomeContext)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -44,7 +45,7 @@ const DeleteTaskDialog = props => {
           <Button onClick={handleClose} variant="contained">
             Cancel
           </Button>
-          <Button onClick={handleDeleteTask(props.id)} color="secondary" variant="contained">
+          <Button onClick={handleDeleteTask(props._id, props.isArchived)} color="secondary" variant="contained">
             Delete
           </Button>
         </DialogActions>

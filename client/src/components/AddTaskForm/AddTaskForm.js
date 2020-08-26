@@ -1,8 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import {
   Button,
   TextField,
-  TextareaAutosize,
   Dialog,
   DialogActions,
   DialogContent,
@@ -10,10 +9,10 @@ import {
   DialogTitle
 } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import HomeContext from '../../utils/HomeContext'
+import AppContext from '../../utils/AppContext'
 
 const AddTaskForm = () => {
-  const { title, notes, handleInputChange, addFormOpen, handleAddFormOpen, handleAddFormCancel, handleAddFormAdd } = useContext(HomeContext)
+  const { addTitle, addNotes, handleInputChange, addFormOpen, handleAddFormOpen, handleAddFormCancel, handleAddTask } = useContext(AppContext)
 
   return (
     <div>
@@ -23,28 +22,28 @@ const AddTaskForm = () => {
         onClick={handleAddFormOpen}
         startIcon={<AddIcon />}
       >
-        New Task
+        Add Task
       </Button>
       <Dialog open={addFormOpen} onClose={handleAddFormCancel} aria-labelledby="form-task-title">
         <DialogTitle id="form-task-title">Add Task</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To add a new task, enter at least a title.
+            Enter at least a title.
           </DialogContentText>
           <TextField
             autoFocus
-            name="title"
-            value={title}
+            name="addTitle"
+            value={addTitle}
             onChange={handleInputChange}
             margin="dense"
-            label="Task Title"
+            label="Title"
             type="text"
             fullWidth
             />
           <br />
           <TextField
-            name="notes"
-            value={notes}
+            name="addNotes"
+            value={addNotes}
             onChange={handleInputChange}
             margin="dense"
             label="Notes"
@@ -58,7 +57,7 @@ const AddTaskForm = () => {
           <Button onClick={handleAddFormCancel} color="secondary" variant="outlined">
             Cancel
           </Button>
-          <Button onClick={handleAddFormAdd} color="primary" variant="outlined">
+          <Button onClick={handleAddTask} color="primary" variant="outlined">
             Add
           </Button>
         </DialogActions>

@@ -1,30 +1,25 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import {
   Grid,
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  AccordionActions,
   FormControlLabel,
   Checkbox,
   Divider,
-  Typography,
-  Button
+  Typography
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
-import EditIcon from '@material-ui/icons/Edit'
-import DeleteIcon from '@material-ui/icons/Delete'
-import ArchiveIcon from '@material-ui/icons/Archive'
 import { makeStyles } from '@material-ui/core/styles'
-import DeleteTaskDialog from '../DeleteTaskDialog'
+import TaskAccordionActions from '../../components/TaskAccordionActions'
 
 const useStyles = makeStyles({
-  root: {
+  taskAccordion: {
     marginTop: '0.5rem',
-    marginBottom: '0.5rem'
+    marginBottom: '0.5rem',
   },
-  handle: {
+  taskAccordionHandle: {
     cursor: 'move',
     cursor: '-webkit-grabbing'
   },
@@ -34,11 +29,9 @@ const useStyles = makeStyles({
   formUnchecked: {
     textDecoration: 'none'
   },
-  accordionChecked: {
-
-  },
-  accordionUnchecked: {
-
+  accordion: {
+    backgroundColor: "#B4B8AB",
+    color: "black"
   }
 })
 
@@ -46,7 +39,7 @@ const TaskAccordion = props => {
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
+    <div className={classes.taskAccordion}>
       <Grid
         container
         wrap="nowrap"
@@ -56,27 +49,32 @@ const TaskAccordion = props => {
         <Grid item xs={1}>
           <Grid container alignItems="center" justify="center">
             <Grid item>
-              <UnfoldMoreIcon className={classes.handle} />
+              <UnfoldMoreIcon className={classes.taskAccordionHandle + " draggableHandle"} />
             </Grid>
           </Grid>
         </Grid>
         <Grid item xs={11}>
-          <Accordion className={props.isChecked ? classes.accordionChecked : classes.accordionUnchecked}>
+          <Accordion className={classes.accordion}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-label="Expand"
               aria-controls="additional-actions1-content"
               id="additional-actions1-header"
             >
-              <FormControlLabel
-                checked={props.isChecked}
-                className={props.isChecked ? classes.formChecked : classes.formUnchecked}
-                aria-label="Acknowledge"
-                onClick={props.setChecked(props.index, !props.isChecked)}
-                onFocus={(event) => event.stopPropagation()}
-                control={<Checkbox />}
-                label={props.title}
-              />
+              {props.isArchived
+                ? <div>{props.title}</div>
+                : (
+                  <FormControlLabel
+                    checked={props.isChecked}
+                    className={props.isChecked ? classes.formChecked : classes.formUnchecked}
+                    aria-label="Acknowledge"
+                    onClick={props.toggleChecked(props.index, !props.isChecked)}
+                    onFocus={(event) => event.stopPropagation()}
+                    control={<Checkbox color="primary" />}
+                    label={props.title}
+                  />
+                )
+              }
             </AccordionSummary>
             <Divider />
             <AccordionDetails>
@@ -84,31 +82,7 @@ const TaskAccordion = props => {
                 {props.notes}
               </Typography>
             </AccordionDetails>
-            <AccordionActions>
-              <Button 
-                size="small" 
-                variant="contained" 
-                color="primary"
-                startIcon={<EditIcon />}
-                onClick={() => {
-                  // Add edit task dialog
-                }}
-              >
-                Edit
-              </Button>
-              <Button 
-                size="small" 
-                variant="contained"
-                startIcon={<ArchiveIcon />}
-                onClick={() =>{ 
-                  console.log(props)
-                  // update task in db and remove from local list
-                }}
-              >
-                Archive
-              </Button>
-              <DeleteTaskDialog title={"Delete " + props.title} id={props.id} />
-            </AccordionActions>
+            <TaskAccordionActions {...props} />
           </Accordion>
         </Grid>
       </Grid>
