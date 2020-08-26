@@ -259,25 +259,6 @@ function App() {
   }, [])
 
   return (
-<<<<<<< HEAD
-    <Router>
-      <div>
-        <UserContext.Provider value={user}>
-          <Switch>
-            <Route path="/archive">
-              <Archive />
-            </Route>
-            <Route path="/signin">
-              <SignIn />
-            </Route>
-            <Route exact path="/">
-              <Home />
-            </Route>
-          </Switch>
-        </UserContext.Provider>
-      </div>
-    </Router>
-=======
     <DrawerContext.Provider value={drawerState}>
       <UserContext.Provider value={userState}>
         <AppContext.Provider value={appState}>
@@ -324,7 +305,6 @@ function App() {
         </AppContext.Provider>
       </UserContext.Provider>
     </DrawerContext.Provider>
->>>>>>> d19da573ff5db8c664f5aadc3b8e5636255b5f14
   )
 }
 

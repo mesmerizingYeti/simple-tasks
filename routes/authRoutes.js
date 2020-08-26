@@ -76,14 +76,9 @@ module.exports = app => {
   })
 
 
-<<<<<<< HEAD
-  // Redirect to home page after successful google sign in
-  app.get('auth/google/redirect', passport.authenticate('google', {
-=======
   // google callback url
   app.get('/auth/google/redirect', passport.authenticate('google', {
     successRedirect: 'http://localhost:3000/home',
->>>>>>> d19da573ff5db8c664f5aadc3b8e5636255b5f14
     failureRedirect: '/auth/signin/failure'
   }), (req, res) => {
     res.json(req.user)
