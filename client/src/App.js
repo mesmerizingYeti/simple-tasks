@@ -112,8 +112,8 @@ function App() {
       .catch(err => console.error(err))
   }
 
-  // helper function for handleDeleteTask and handleToggleArchived
-  const removeTaskAndUpdate = async (list, _id, isArchived) => {
+  // helper functions for appState functions
+  const removeTask = async (list, _id, isArchived) => {
     let promise = new Promise((resolve, reject) => {
       // archived tasks have negative priority
       const sign = isArchived ? -1 : 1
@@ -124,12 +124,7 @@ function App() {
         // not using 0 as a priority
         .map((task, index) => ({ ...task, priority: sign * (index + 1) }))
       // update database
-      const dataList = updatedList.map(task => ({ _id: task._id, value: { priority: task.priority} }))
-      TaskApi.updateTasks(dataList)
-        // return updated list if successful
-        .then(() => resolve(updatedList))
-        // else return error
-        .catch(err => reject(err))
+      resolve(updatedList)
     })
 
     return promise
@@ -138,7 +133,8 @@ function App() {
   appState.handleDeleteTask = (_id, isArchived) => event => {
     const list = isArchived ? appState.archiveList : appState.homeList
     TaskApi.deleteTask(_id)
-      .then(() => removeTaskAndUpdate(list, _id, isArchived))
+      .then(() => removeTask(list, _id, isArchived))
+      .then(updatedList => appState.updateDatabase(updatedList))
       .then(updatedList => {
         // update correct list in appState
         if (isArchived) {
@@ -162,7 +158,8 @@ function App() {
         // grab task and add to new list
         const task = oldList.find(task => task._id === _id)
         newList.push(task)
-        removeTaskAndUpdate(oldList, _id, wasArchived)
+        removeTask(oldList, _id, wasArchived)
+          .then(updatedList => appState.updateDatabase(updatedList))
           .then(updatedList => {
             // update correct list in appState
             if (wasArchived) {
@@ -191,6 +188,24 @@ function App() {
         setAppState({ ...appState, homeList: updatedList })
       })
       .catch(err => console.error(err))
+  }
+
+  // update priorities of tasks in list on database
+  appState.updateDatabase = async (list) => {
+    let promise = new Promise((resolve, reject) => {
+      // only pass the server the changed information
+      const dataList = list.map((task, index) => { 
+        const newPriority = index + 1
+        return {_id: task._id, value: { priority: newPriority }}
+      })
+      // update database
+      TaskApi.updateTasks(dataList)
+        // return list if successful
+        .then(() => resolve(list))
+        .catch(err => reject(err))
+    })
+
+    return promise
   }
 
   // these functions are needed for ReactSortable to work
@@ -233,7 +248,7 @@ function App() {
               // finished loading user data
               setIsLoading(false)
             })
-            .catch(err => console.log(err))
+            .catch(err => console.error(err))
         } else {
           // nothing to load
           setIsLoading(false)

@@ -21,6 +21,7 @@ const AppContext = createContext({
   handleDeleteTask: () => {},
   handleToggleArchived: () => {},
   handleToggleChecked: () => {},
+  updateDatabase: () => {},
   setHomeList: () => {},
   setArchiveList: () => {},
 })

@@ -5,7 +5,14 @@ import AppContext from '../../utils/AppContext'
 
 
 const TaskDraggableList = props => {
-  const { homeList, archiveList, handleToggleChecked, setHomeList, setArchiveList } = useContext(AppContext)
+  const { 
+    homeList, 
+    archiveList, 
+    handleToggleChecked, 
+    updateDatabase,
+    setHomeList, 
+    setArchiveList 
+  } = useContext(AppContext)
 
   return (
     <ReactSortable 
@@ -15,6 +22,11 @@ const TaskDraggableList = props => {
       animation={150}
       delayOnTouchStart={true}
       delay={2}
+      onEnd={() => 
+        updateDatabase(props.page === "home" ? homeList : archiveList)
+          .then(() => console.log('Updated database successfully'))
+          .catch(err => console.error(err))
+      }
     >
       {(props.page === "home" ? homeList : archiveList)
         .map((task, index) => {
