@@ -40,7 +40,7 @@ const Logo = props => {
         </linearGradient>
       </defs>
       <g fill="none" fillRule="evenodd">
-        <path fill="#38817a" d="M0 0h500v500H0z" />
+        <path fill="#3f51b5" d="M0 0h500v500H0z" />
         <path
           fill="url(#logo_svg__a)"
           d="M158.821 19.769H40.206v19.769H178.59v158.154l19.769-19.769V19.769z"

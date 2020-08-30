@@ -19,6 +19,18 @@ const useStyles = makeStyles({
     transform: 'translateX(-50%) translateY(-50%)',
     minHeight: '40%',
     minWidth: '40%',
+    "@media (max-width: 840px)": {
+      width: '50%'
+    },
+    "@media (max-width: 670px)": {
+      width: "75%",
+    },
+    "@media (max-width: 450px)": {
+      width: "85%",
+    },
+    "@media (max-width: 400px)": {
+      width: "95%",
+    }
   },
   title: {
     color: '#916953',
@@ -27,7 +39,7 @@ const useStyles = makeStyles({
   logo: {
     width: '7rem',
     height: '7rem',
-    borderRadius: '50%',
+    borderRadius: '20%',
     WebkitBoxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
     marginBottom: '0.5rem'
   },

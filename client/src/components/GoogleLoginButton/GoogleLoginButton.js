@@ -24,16 +24,15 @@ const GoogleLoginButton = props => {
     <Button
       className={classes.button}
       onClick={props.onClick}
-      fullWidth
     >
-      <Grid container justify="space-between" alignItems="center">
+      <Grid container justify="center" alignItems="center">
         <Grid container item xs={2} justify="center" alignItems="center">
           <GoogleIcon
             className={classes.icon}
           />
         </Grid>
         <Grid container item xs={9} justify="center" alignItems="center">
-          <Typography variant="h6">Google Login</Typography>
+          <Typography variant="button">Sign in with Google</Typography>
         </Grid>
       </Grid>
     </Button>
