@@ -32,7 +32,7 @@ const EditTaskForm = props => {
         onClick={handleEditFormOpen(props.title, props.notes, props._id)}
         startIcon={<EditIcon />}
       >
-        Edit Task
+        Edit
       </Button>
       <Dialog open={editFormOpen} onClose={handleEditFormCancel} aria-labelledby="edit-form-task-title">
         <DialogTitle id="edit-form-task-title">
