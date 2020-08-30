@@ -8,7 +8,6 @@ const TaskDraggableList = props => {
   const { 
     homeList, 
     archiveList, 
-    handleToggleChecked, 
     updateDatabase,
     setHomeList, 
     setArchiveList 
@@ -37,7 +36,6 @@ const TaskDraggableList = props => {
             <div key={task._id}>
               <TaskAccordion
                 index={index}
-                toggleChecked={handleToggleChecked}
                 {...task} 
               />
             </div>

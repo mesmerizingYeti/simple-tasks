@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   Grid,
   Accordion,
@@ -12,7 +12,8 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 import { makeStyles } from '@material-ui/core/styles'
-import TaskAccordionActions from '../../components/TaskAccordionActions'
+import AppContext from '../../utils/AppContext'
+import TaskAccordionActions from '../TaskAccordionActions'
 
 const useStyles = makeStyles({
   taskAccordion: {
@@ -37,6 +38,7 @@ const useStyles = makeStyles({
 
 const TaskAccordion = props => {
   const classes = useStyles()
+  const { handleToggleChecked } = useContext(AppContext)
 
   return (
     <div className={classes.taskAccordion}>
@@ -62,13 +64,13 @@ const TaskAccordion = props => {
               id="additional-actions1-header"
             >
               {props.isArchived
-                ? <div>{props.title}</div>
+                ? <Typography variant="body1">{props.title}</Typography>
                 : (
                   <FormControlLabel
                     checked={props.isChecked}
                     className={props.isChecked ? classes.formChecked : classes.formUnchecked}
                     aria-label="Acknowledge"
-                    onClick={props.toggleChecked(props.index, !props.isChecked)}
+                    onClick={handleToggleChecked(props._id, props.isChecked)}
                     onFocus={(event) => event.stopPropagation()}
                     control={<Checkbox color="primary" />}
                     label={props.title}
