@@ -24,7 +24,7 @@ const TaskAccordionActions = props => {
         startIcon={props.isArchived ? <UnarchiveIcon /> : <ArchiveIcon />}
         onClick={handleToggleArchived(props._id, props.isArchived)}
       >
-        Archive
+        {props.isArchived ? "Unarchive" : "Archive"}
       </Button>
       <DeleteTaskDialog 
         title={"Delete " + props.title} 

@@ -1,7 +1,10 @@
+const { join } = require('path')
+
 module.exports = app => {
 
   app.get('*', (req, res) => {
-    res.redirect('/')
+    console.log(req)
+    res.send(join(__dirname, "client", "build"))
   })
   
 }
