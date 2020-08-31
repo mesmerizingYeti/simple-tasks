@@ -274,11 +274,11 @@ function App() {
                 <Router>
                   <div>
                     {userState.isAuthenticated
-                      ? (
-                        <>
-                          <NavDrawer />
-                          <NavBar />
-                        </>
+                      ? ( null
+                        // <>
+                        //   <NavDrawer />
+                        //   <NavBar />
+                        // </>
                       )
                       : null
                     }
@@ -286,7 +286,7 @@ function App() {
                       <Route path="/archive">
                         {userState.isAuthenticated
                           ? <Archive />
-                          : null
+                          : <Redirect to="/" />
                         }
                       </Route>
                       <Route path="/home">
