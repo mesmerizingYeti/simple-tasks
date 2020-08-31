@@ -157,11 +157,11 @@ function App() {
         let oldList = wasArchived ? appState.archiveList : appState.homeList
         // grab task and add to new list
         const task = oldList.find(task => task._id === _id)
-        newList.push(task)
+        newList.push({ ...task, isArchived: !task.isArchived })
         removeTask(oldList, _id, wasArchived)
           .then(updatedList => appState.updateDatabase(updatedList, wasArchived))
           .then(updatedList => {
-            // update correct list in appState
+            // update old list in appState
             if (wasArchived) {
               setAppState({ ...appState, archiveList: updatedList })
             } else {
@@ -193,16 +193,20 @@ function App() {
   // update priorities of tasks in list on database
   appState.updateDatabase = async (list, isArchived) => {
     let promise = new Promise((resolve, reject) => {
-      // only pass the server the changed information
-      const dataList = list.map((task, index) => { 
+      const updatedList = list.map((task, index) => {
         const sign = isArchived ? -1 : 1
         const newPriority = sign * (index + 1)
-        return {_id: task._id, value: { priority: newPriority }}
+        return { ...task, priority: newPriority}
       })
+      // only pass the server the changed information
+      const dataList = list.map(
+        (task, index) =>  
+          ({_id: task._id, value: { priority: task.priority }})
+      )
       // update database
       TaskApi.updateTasks(dataList)
         // return list if successful
-        .then(() => resolve(list))
+        .then(() => resolve(updatedList))
         .catch(err => reject(err))
     })
 
