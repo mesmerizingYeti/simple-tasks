@@ -297,7 +297,7 @@ function App() {
                       </Route>
                       <Route exact path="/">
                         {userState.isAuthenticated
-                          ? null
+                          ? <Redirect to="/home" />
                           : <Login />
                         }
                       </Route>
