@@ -150,23 +150,28 @@ function App() {
   appState.handleToggleArchived = (_id, wasArchived) => event => {
     // put task at end of new list
     // not using 0 as a priority
+    console.log('toggling archived, wasArchived: ', wasArchived)
     const priority = wasArchived ? appState.homeList.length + 1 : -(appState.archiveList.length + 1)
     TaskApi.updateTask({ _id, isArchived: !wasArchived, priority })
       .then(() => {
+        console.log('updated task on database')
         let newList = wasArchived ? appState.homeList : appState.archiveList
         let oldList = wasArchived ? appState.archiveList : appState.homeList
         // grab task and add to new list
         const task = oldList.find(task => task._id === _id)
         newList.push({ ...task, isArchived: !task.isArchived })
+        console.log(`updated newList: ${wasArchived ? 'homeList' : 'archiveList'}`)
         removeTask(oldList, _id, wasArchived)
           .then(updatedList => appState.updateDatabase(updatedList, wasArchived))
           .then(updatedList => {
+            console.log(`updated priorities in ${wasArchived ? 'archiveList' : 'homeList'} on database`)
             // update old list in appState
             if (wasArchived) {
               setAppState({ ...appState, archiveList: updatedList })
             } else {
               setAppState({ ...appState, homeList: updatedList })
             }
+            console.log(`updated oldList: ${wasArchived ? 'archiveList' : 'homeList'}`)
           })
           .catch(err => console.error(err))
       })
@@ -235,31 +240,26 @@ function App() {
   }
 
   useEffect(() => {
-    console.log('checking user authentication')
     // check if user has been authenticated
     checkGoogleAuth()
       .then(({ data }) => {
         const { isAuthenticated, user } = data
         // user has value if isAuthenticated is true
         if (isAuthenticated) {
-          console.log('user is authenticated')
           const { _id, googleId, email, name } = user
           // need to get populated taskList
           TaskApi.getUserTasks()
             .then(({ data: taskList }) => {
-              console.log('got user tasks and setting state')
               setUserState({ ...userState, isAuthenticated, _id, googleId, email, name, taskList })
               // set up homeList and archiveList in appState
               const homeList = taskList.filter(task => !task.isArchived).sort((a, b) => a.priority - b.priority)
               const archiveList = taskList.filter(task => task.isArchived).sort((a, b) => b.priority - a.priority)
               setAppState({ ...appState, homeList, archiveList })
-              console.log('finished loading')
               // finished loading user data
               setIsLoading(false)
             })
             .catch(err => console.error(err))
         } else {
-          console.log('user is not authenticated')
           // nothing to load
           setIsLoading(false)
         }
