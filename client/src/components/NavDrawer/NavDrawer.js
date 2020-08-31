@@ -1,8 +1,6 @@
 import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
-import {
-  makeStyles
-} from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import {
   SwipeableDrawer,
   List,
@@ -14,13 +12,14 @@ import {
 import HomeIcon from '@material-ui/icons/Home'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import ListItemLink from '../ListItemLink'
 import DrawerContext from '../../utils/DrawerContext'
 
 const useStyles = makeStyles({
   list: {
     width: 160,
   },
-  redColor : {
+  redColor: {
     color: "red"
   }
 })
@@ -40,35 +39,25 @@ const NavDrawer = () => {
     >
       <List>
         {/* home */}
-        <ListItem 
-          button 
+        <ListItemLink 
+          to="/home"
+          primary="Home"
+          icon={<HomeIcon />}
           key="home"
-          onClick={() =>{
-            history.push('/home')
-            history.go(0)
-          }}
-        >
-          <ListItemIcon><HomeIcon /></ListItemIcon>
-          <ListItemText primary={"Home"} />
-        </ListItem>
+        />
         {/* archive */}
-        <ListItem 
-          button 
+        <ListItemLink 
+          to="/archive"
+          primary="Archive"
+          icon={<ArchiveIcon />}
           key="archive"
-          onClick={() =>{
-            history.push('/archive')
-            history.go(0)
-          }}
-        >
-          <ListItemIcon><ArchiveIcon /></ListItemIcon>
-          <ListItemText primary={"Archive"} />
-        </ListItem>
+        />
         <Divider />
         {/* logout */}
-        <ListItem 
-          button 
+        <ListItem
+          button
           key="logout"
-          onClick={() =>{
+          onClick={() => {
             history.push('/auth/logout')
             history.go(0)
           }}
