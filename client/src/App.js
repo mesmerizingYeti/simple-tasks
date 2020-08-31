@@ -3,7 +3,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
+  useHistory
 } from 'react-router-dom'
 
 import Home from './pages/Home'
@@ -18,6 +19,8 @@ import { checkGoogleAuth } from './utils/UserAuthApi'
 import TaskApi from './utils/TaskApi'
 
 function App() {
+  const history = useHistory()
+
   // state for preventing components from rendering until useEffect finishes
   const [isLoading, setIsLoading] = useState(true)
 
@@ -231,6 +234,7 @@ function App() {
   }
 
   useEffect(() => {
+    console.log(history.location)
     console.log('checking user authentication')
     // check if user has been authenticated
     checkGoogleAuth()
@@ -274,11 +278,11 @@ function App() {
                 <Router>
                   <div>
                     {userState.isAuthenticated
-                      ? ( null
-                        // <>
-                        //   <NavDrawer />
-                        //   <NavBar />
-                        // </>
+                      ? (
+                        <>
+                          <NavDrawer />
+                          <NavBar />
+                        </>
                       )
                       : null
                     }
