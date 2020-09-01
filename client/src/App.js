@@ -198,20 +198,23 @@ function App() {
   // update priorities of tasks in list on database
   appState.updateDatabase = async (list, isArchived) => {
     let promise = new Promise((resolve, reject) => {
+      console.log('in updateDatabase promise')
       const updatedList = list.map((task, index) => {
         const sign = isArchived ? -1 : 1
         const newPriority = sign * (index + 1)
         return { ...task, priority: newPriority}
       })
+      console.log('created updatedList')
       // only pass the server the changed information
       const dataList = list.map(
         (task, index) =>  
           ({_id: task._id, value: { priority: task.priority }})
       )
+      console.log('created dataList')
       // update database
       TaskApi.updateTasks(dataList)
         // return list if successful
-        .then(() => resolve(updatedList))
+        .then(() => {console.log('updatedTasks successful');resolve(updatedList)})
         .catch(err => reject(err))
     })
 
