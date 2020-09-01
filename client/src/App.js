@@ -198,6 +198,11 @@ function App() {
   // update priorities of tasks in list on database
   appState.updateDatabase = async (list, isArchived) => {
     let promise = new Promise((resolve, reject) => {
+      // if list is empty, return empty list
+      if (typeof list === 'undefined' || list.length === 0) {
+        resolve([])
+      }
+      // else update database and return updated list
       console.log('in updateDatabase promise')
       const updatedList = list.map((task, index) => {
         const sign = isArchived ? -1 : 1
@@ -215,7 +220,7 @@ function App() {
       TaskApi.updateTasks(dataList)
         // return list if successful
         .then(() => {console.log('updatedTasks successful');resolve(updatedList)})
-        .catch(err => reject(err))
+        .catch(err => {console.log('updatedTasks failed');reject(err)})
     })
 
     return promise

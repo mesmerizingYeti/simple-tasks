@@ -55,7 +55,7 @@ module.exports = app => {
   app.put('/tasks/many', authCheck, (req, res) => {
     console.log('in update many tasks route')
     req.body.forEach((taskData, index, array) => {
-      console.log(`about to update task ${taskData._id}`)
+      console.log(`about to update task: ${taskData}`)
       Task.updateOne({ _id: taskData._id }, taskData.value)
         .then(() => {
           console.log(`finished updating task ${taskData._id}`)
