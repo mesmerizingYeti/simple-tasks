@@ -53,14 +53,10 @@ module.exports = app => {
 
   // UPDATE MANY Tasks
   app.put('/tasks/many', authCheck, (req, res) => {
-    console.log('in update many tasks route')
     req.body.forEach((taskData, index, array) => {
-      console.log(`about to update task: ${taskData}`)
       Task.updateOne({ _id: taskData._id }, taskData.value)
         .then(() => {
-          console.log(`finished updating task ${taskData._id}`)
           if (index === array.length - 1) {
-            console.log('finished updating all tasks')
             res.sendStatus(200)
           }
         })

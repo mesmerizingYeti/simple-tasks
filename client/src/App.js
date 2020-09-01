@@ -150,28 +150,23 @@ function App() {
   appState.handleToggleArchived = (_id, wasArchived) => event => {
     // put task at end of new list
     // not using 0 as a priority
-    console.log('toggling archived, wasArchived: ', wasArchived)
     const priority = wasArchived ? appState.homeList.length + 1 : -(appState.archiveList.length + 1)
     TaskApi.updateTask({ _id, isArchived: !wasArchived, priority })
       .then(() => {
-        console.log('updated task on database')
         let newList = wasArchived ? appState.homeList : appState.archiveList
         let oldList = wasArchived ? appState.archiveList : appState.homeList
         // grab task and add to new list
         const task = oldList.find(task => task._id === _id)
         newList.push({ ...task, isArchived: !task.isArchived })
-        console.log(`updated newList: ${wasArchived ? 'homeList' : 'archiveList'}`)
         removeTask(oldList, _id, wasArchived)
           .then(updatedList => appState.updateDatabase(updatedList, wasArchived))
           .then(updatedList => {
-            console.log(`updated priorities in ${wasArchived ? 'archiveList' : 'homeList'} on database`)
             // update old list in appState
             if (wasArchived) {
               setAppState({ ...appState, archiveList: updatedList })
             } else {
               setAppState({ ...appState, homeList: updatedList })
             }
-            console.log(`updated oldList: ${wasArchived ? 'archiveList' : 'homeList'}`)
           })
           .catch(err => console.error(err))
       })
@@ -203,24 +198,21 @@ function App() {
         resolve([])
       }
       // else update database and return updated list
-      console.log('in updateDatabase promise')
       const updatedList = list.map((task, index) => {
         const sign = isArchived ? -1 : 1
         const newPriority = sign * (index + 1)
         return { ...task, priority: newPriority}
       })
-      console.log('created updatedList')
       // only pass the server the changed information
-      const dataList = list.map(
-        (task, index) =>  
+      const dataList = updatedList.map(
+        (task) =>  
           ({_id: task._id, value: { priority: task.priority }})
       )
-      console.log('created dataList')
       // update database
       TaskApi.updateTasks(dataList)
         // return list if successful
-        .then(() => {console.log('updatedTasks successful');resolve(updatedList)})
-        .catch(err => {console.log('updatedTasks failed');reject(err)})
+        .then(() => resolve(updatedList))
+        .catch(err => reject(err))
     })
 
     return promise
