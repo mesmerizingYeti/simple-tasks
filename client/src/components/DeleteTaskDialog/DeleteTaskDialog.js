@@ -23,6 +23,11 @@ const DeleteTaskDialog = props => {
     setOpen(false)
   }
 
+  const deleteClick = () => {
+    setOpen(false)
+    handleDeleteTask(props._id, props.isArchived)
+  }
+
   return (
     <div>
       <Button
@@ -45,7 +50,7 @@ const DeleteTaskDialog = props => {
           <Button onClick={handleClose} variant="contained">
             Cancel
           </Button>
-          <Button onClick={handleDeleteTask(props._id, props.isArchived)} color="secondary" variant="contained">
+          <Button onClick={deleteClick} color="secondary" variant="contained">
             Delete
           </Button>
         </DialogActions>

@@ -29,7 +29,7 @@ const TaskAccordionActions = props => {
       <DeleteTaskDialog 
         title={"Delete " + props.title} 
         _id={props._id} 
-        idArchived={props.isArchived}
+        isArchived={props.isArchived}
       />
     </AccordionActions>
   )

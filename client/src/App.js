@@ -115,6 +115,14 @@ function App() {
   // helper functions for appState functions
   const removeTask = async (list, _id, isArchived) => {
     let promise = new Promise((resolve, reject) => {
+      // check for edge cases
+      if (list.length === 0) {
+        // shouldn't hit this case but just in case
+        reject(Error(`Trying to remove task ${_id} from empty list`))
+      } else if (list.length === 1) {
+        // removing last task from list
+        resolve([])
+      }
       // archived tasks have negative priority
       const sign = isArchived ? -1 : 1
       let updatedList = list
@@ -130,7 +138,7 @@ function App() {
     return promise
   }
 
-  appState.handleDeleteTask = (_id, isArchived) => event => {
+  appState.handleDeleteTask = (_id, isArchived) => {
     const list = isArchived ? appState.archiveList : appState.homeList
     TaskApi.deleteTask(_id)
       .then(() => removeTask(list, _id, isArchived))

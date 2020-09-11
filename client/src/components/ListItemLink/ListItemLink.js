@@ -1,9 +1,6 @@
 import React, { useMemo, forwardRef } from 'react'
 import PropTypes from 'prop-types'
-import { 
-  useHistory, 
-  Link as RouterLink 
-} from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import {
   ListItem, 
   ListItemIcon,

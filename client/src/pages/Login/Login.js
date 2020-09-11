@@ -7,7 +7,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles'
 
 import Logo from '../../components/Logo'
-import LoginForm from '../../components/LoginForm'
+// import LoginForm from '../../components/LoginForm'
 import GoogleLoginButton from '../../components/GoogleLoginButton'
 
 const useStyles = makeStyles({
